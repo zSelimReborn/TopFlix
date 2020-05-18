@@ -1,0 +1,53 @@
+# docker-compose.yml
+version: '3'
+services:
+    flask:
+        image: webapp-flask
+        build:
+            context: ./Flask
+        volumes:
+            - "../:/app"
+        depends_on: 
+            - mongodb
+        networks:    
+            - backend        
+        environment: 
+            - NETFLIX_API_URL=${NETFLIX_API_URL}
+            - NETFLIX_API_KEY=${NETFLIX_API_KEY}
+            - FILE_OFFSET_LOCATION=${FILE_OFFSET_LOCATION}
+    nginx:
+        image: webapp-nginx
+        build:
+            context: ./Nginx
+        ports:
+            - 5000:80
+        depends_on:
+            - flask
+        networks:
+            - frontend    
+            - backend    
+    
+    mongodb:
+        image: mongo:latest
+        container_name: "server_mongodb"
+        environment:
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+            - MONGO_INITDB_DATABASE=db
+        volumes:
+            - databases:/data/db
+        ports:
+            - 27017:27017
+        command: mongod --logpath=/dev/null # --quiet
+        networks:    
+            - backend    
+
+
+volumes:
+  databases:
+
+networks:
+  frontend:
+    driver: "bridge"
+  backend:
+    driver: "bridge"
