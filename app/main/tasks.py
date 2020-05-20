@@ -36,7 +36,7 @@ def process_netflix_api():
         "country_andorunique":"unique",
         "start_year":"1972",
         "orderby":"rating",
-        "limit":"10",
+        "limit":"5",
         "countrylist":"269",
         "audio":"italian",
         "offset": offset,
@@ -48,9 +48,9 @@ def process_netflix_api():
         genres = api.genre_by_title(title.get_netflixid())
 
         t = Title.create_by_adapter(title, genres)
-        print("MongoId: %s - Name: %s" % (t.mongo_id, t.name))
+        print("MongoId: %s - Name: %s" % (t.id, t.name))
         for genre in t.genres:
-            print("GenreID: %s - Name: %s" % (genre.mongo_id, genre.name))
+            print("GenreID: %s - Name: %s" % (genre.id, genre.name))
     
 
     write_offset(str(offset + 10))

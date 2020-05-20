@@ -15,6 +15,9 @@ services:
             - NETFLIX_API_URL=${NETFLIX_API_URL}
             - NETFLIX_API_KEY=${NETFLIX_API_KEY}
             - FILE_OFFSET_LOCATION=${FILE_OFFSET_LOCATION}
+            - DB_USER=${DB_USERNAME}
+            - DB_PASS=${DB_PASSWORD}
+            - DB_NAME=${DB_NAME}
     nginx:
         image: webapp-nginx
         build:
@@ -33,7 +36,9 @@ services:
         environment:
             - MONGO_DATA_DIR=/data/db
             - MONGO_LOG_DIR=/dev/null
-            - MONGO_INITDB_DATABASE=db
+            #- MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
+            #- MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}      
+            - MONGO_INITDB_DATABASE=${DB_NAME}
         volumes:
             - databases:/data/db
         ports:

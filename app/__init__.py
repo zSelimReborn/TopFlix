@@ -1,8 +1,10 @@
 from flask import Flask, request, current_app
 from .config import Config
-from flask_mongoalchemy import MongoAlchemy
+from flask_mongoengine import MongoEngine
+from flask_security import Security, MongoEngineUserDatastore, UserMixin, RoleMixin, login_required
+import os
 
-db = MongoAlchemy()
+db = MongoEngine()
 
 def create_app(config_class=Config):
     app = Flask(__name__)

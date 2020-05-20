@@ -21,7 +21,7 @@ class Genre(db.Document):
     
     @staticmethod
     def get_by_netflixid(nid):
-        genre = Genre.query.filter(Genre.netflix_id == nid).first()
+        genre = Genre.objects.filter(netflix_id=nid).first()
         return genre
     
     @staticmethod
@@ -41,13 +41,13 @@ class Title(db.Document):
     description = db.StringField()
     year = db.IntField()
     title_type = db.StringField()
-    genres = db.ListField(db.DocumentField(Genre), default_empty=True, required=False)
+    genres = db.ListField(db.ReferenceField(Genre))
     inserted_at = db.StringField()
     meta = {'collection': 'Title'}
 
     @staticmethod
     def find_by_netflixid(nid):
-        title = Title.query.filter(Title.netflix_id == nid).first()
+        title = Title.objects.filter(netflix_id=nid).first()
         return title
     
     @staticmethod
@@ -72,10 +72,13 @@ class Title(db.Document):
                 inserted_at=now
             )
 
+        genres_created = []
         if genres is not None:
             for genre in genres:
                 genre_created = Genre.create_if_not_exists(genre)
-                Title.associate_title_genre(t, genre_created)
+                genres_created.append(genre_created)
+                #Title.associate_title_genre(t, genre_created)
 
+        t.genres = genres_created
         t.save()
         return t

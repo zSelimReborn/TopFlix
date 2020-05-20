@@ -8,20 +8,16 @@ from app.main.tasks import process_netflix_api
 
 @bp.route("/")
 def homepage():
-    #process_netflix_api()        
-    titles = Title.query.all()
-    d = []
-    for title in titles:
-        t = {
-            "id": title.netflix_id,
-            "name": html.unescape(title.name),
-            "description": html.unescape(title.description)
-        }
+    #process_netflix_api()   
 
-        d.append(t)
-    return jsonify(d)
+    return jsonify("json")
 
-@bp.errorhandler(Exception)
+@bp.errorhandler(404)
 def handle_exception(e):
     result = str(e)
     return json.dumps({"Exception: ": result})
+
+@bp.errorhandler(500)
+def handle_errors(e):
+    result = str(e)
+    return result, 500

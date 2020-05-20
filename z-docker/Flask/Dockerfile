@@ -10,6 +10,7 @@ EXPOSE 5000
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt
+RUN pip install http://github.com/pythonforfacebook/facebook-sdk/tarball/master
 
 COPY . .
 
