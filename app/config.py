@@ -15,8 +15,5 @@ class Config(object):
     PROPAGATE_EXCEPTIONS = True
     JSONIFY_PRETTYPRINT_REGULAR = True
 
-    SOCIAL_FACEBOOK = {
-        'consumer_key': os.environ.get("FB_APP_ID"),
-        'consumer_secret': os.environ.get("FB_SECRET_KEY")
-    }
-
+    FACEBOOK_OAUTH_CLIENT_ID = os.environ.get("FB_APP_ID")
+    FACEBOOK_OAUTH_CLIENT_SECRET = os.environ.get("FB_SECRET_KEY")

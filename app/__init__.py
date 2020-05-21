@@ -4,7 +4,7 @@ from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
-from flask_security import Security, MongoEngineUserDatastore, UserMixin, RoleMixin, login_required
+from flask_security import Security
 import os
 
 db = MongoEngine()
@@ -27,6 +27,9 @@ def create_app(config_class=Config):
 
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    from app.auth.oauth import facebook_bp
+    app.register_blueprint(facebook_bp, url_prefix="/fb")
 
     return app
 
