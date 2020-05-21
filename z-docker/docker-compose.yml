@@ -18,6 +18,8 @@ services:
             - DB_USER=${DB_USERNAME}
             - DB_PASS=${DB_PASSWORD}
             - DB_NAME=${DB_NAME}
+            - FB_APP_ID=${FACEBOOK_APP_ID}
+            - FB_SECRET_KEY=${FACEBOOK_SECRET_KEY}
     nginx:
         image: webapp-nginx
         build:

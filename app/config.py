@@ -14,3 +14,9 @@ class Config(object):
     FLASK_DEBUG = True
     PROPAGATE_EXCEPTIONS = True
     JSONIFY_PRETTYPRINT_REGULAR = True
+
+    SOCIAL_FACEBOOK = {
+        'consumer_key': os.environ.get("FB_APP_ID"),
+        'consumer_secret': os.environ.get("FB_SECRET_KEY")
+    }
+
