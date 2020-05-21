@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+<div class="view-user-page">
+    {% block app_content %}
+    <div class="user-about">
+        <div class="user-image">
+            <img src="{{ user.avatar }}" alt="Image for {{user.first_name}}">
+        </div>
+        <h1 class="fullname">{{user.first_name}} {{user.last_name}}</h1>
+        <p class="email">
+            {% if user.email %} {{ user.email }} {% endif %}
+        </p>
+    </div>
+    <hr>
+    {% endblock %}
+</div>

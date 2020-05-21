@@ -1,5 +1,6 @@
 from flask import request, escape, render_template, redirect, flash, url_for, jsonify
 from app.main import bp 
+from flask_login import current_user
 import json
 import html
 import os
@@ -11,7 +12,7 @@ from app.main.tasks import process_netflix_api
 def homepage():
     #process_netflix_api()   
 
-    return jsonify(os.environ.get("FB_APP_ID"))
+    return render_template("homepage.html", user=current_user)
 
 @bp.errorhandler(404)
 def handle_exception(e):
