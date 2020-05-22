@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block app_content %}
+    <div class="title-view">
+        <h1 class="name">{{t.name}}</h1>
+        <div class="description-wrapper">
+            <p class="description">
+                {{t.description}}
+            </p>
+        </div>
+        <div class="image-wrapper">
+            <img src="{{t.poster}}" alt="{{t.name}}">
+        </div>
+
+        <div class="tab-wrapper">
+            <div class="tab reviews-wrapper">
+                <p class="reviews-count">Recensioni scritte - {{reviews.count()}}</p>
+                {% include "review/short/list.html" %}
+            </div>
+            <div class="tab new-review">
+                {% include "review/form.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

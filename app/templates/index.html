@@ -19,6 +19,7 @@
                 <li><a href="{{ url_for('main.homepage') }}">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('main.list_title') }}">Explore</a></li>
                 {% if current_user.is_anonymous %}
                 <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                 <li><a href="{{ url_for('auth.register') }}">Register</a></li>

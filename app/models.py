@@ -46,6 +46,10 @@ class Title(db.Document):
     meta = {'collection': 'Title'}
 
     @staticmethod
+    def get_by_id(id):
+        return Title.objects.get(id=id)
+
+    @staticmethod
     def find_by_netflixid(nid):
         title = Title.objects.filter(netflix_id=nid).first()
         return title

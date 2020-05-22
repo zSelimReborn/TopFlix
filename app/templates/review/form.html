@@ -1,0 +1,4 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+<div class="review-form">
+    {{ wtf.quick_form(review_form, action=url_for('main.add_review')) }}
+</div>

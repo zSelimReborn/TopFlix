@@ -9,7 +9,7 @@ import os
 
 db = MongoEngine()
 login = LoginManager()
-login.login_view = 'login'
+login.login_view = 'auth.login'
 bootstrap = Bootstrap()
 mail = Mail()
 
