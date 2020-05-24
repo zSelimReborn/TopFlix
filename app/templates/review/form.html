@@ -1,4 +1,92 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 <div class="review-form">
-    {{ wtf.quick_form(review_form, action=url_for('main.add_review')) }}
+    <form action="{{url_for('main.add_review')}}" role="form" method="POST" class="form" >
+        {{ review_form.hidden_tag() }} 
+        {{ review_form.title_parent_id() }}
+        {{ wtf.form_errors(review_form, hiddens="only") }}
+        <div class="form-group required">
+            <label for="review_title" class="control-label">Titolo Recensione</label>
+            {{ review_form.title(class="form-control", id="review_title", required="required", placeholder="Un film fantastico...") }}
+        </div>
+        <div class="form-group required">
+            <label for="review_content" class="control-label">Recensione</label>
+            {{ review_form.content(class="form-control", id="review_content", required="required", placeholder="Contenuto recensione") }}
+        </div>
+        <div class="form-group required">
+            <label for="review_rating" class="control-label">Valutazione</label>
+            {{ review_form.rating(class="form-control", id="review_rating", required="required", type="hidden") }}
+            <p class="display-slider">1.0</p>
+            <div class="slider"></div>
+        </div>
+
+        <div class="form-group row pros-cons-container ">
+            <div class="col-md-6 pros-cons-wrapper">
+                <label for="review_pros" class="control-label">Pro</label>
+                <button type="button" class="add add-pros btn btn-default btn-sm">Aggiungi</button>
+                <div class="field-list">
+
+                </div>
+            </div>
+            <div class="col-md-6 pros-cons-wrapper">
+                <label for="review_cons" class="control-label">Contro</label>
+                <button type="button" class="add add-cons btn btn-default btn-sm">Aggiungi</button>
+                <div class="field-list">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="review_recommended" class="control-label">Consigliato</label>
+            {{ review_form.recommended(id="review_recommended") }}
+        </div>
+
+        {{ review_form.submit(class="btn btn-default") }}
+    </form>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".slider").slider({
+                animate: "fast",
+                max: 10.0,
+                min: 1.0,
+                step: 0.1,
+                slide: (event, ui) => {
+                    $("#review_rating").val(ui.value.toFixed(1));
+                    $(".display-slider").text(ui.value.toFixed(1));
+                }
+            })
+
+            let createProsConsField = (type, index) => {
+                let wrapper = $("<div class='pros-cons-field-wrapper " + type + "-field-wrapper'></div>")
+                let field = $("<input data-index=" + index + " type='text' class='form-control " + type + "-field' name='" + type + "-" + index + "' />")
+                let rButton = $("<button class='pros-cons-rm' type='button'><span class='material-icons'>remove</span></button>");
+                wrapper.append(field);
+                wrapper.append(rButton);
+
+                return wrapper;
+            };
+
+            $(document).on("click", ".pros-cons-container .add", function() {
+                let btn = jQuery(this);
+                let wrapper = btn.closest(".pros-cons-wrapper");
+
+                let type = "cons";
+                if (btn.hasClass("add-pros")) {
+                    type = "pros";
+                }
+
+                let lastIndex = wrapper.find(".field-list .form-control:last").data("index");
+                let index = (typeof lastIndex !== 'undefined')? lastIndex + 1 : 0;
+                let field = createProsConsField(type, index);
+                wrapper.find(".field-list").append(field);
+            });
+
+            $(document).on("click", ".pros-cons-wrapper .pros-cons-rm", function() {
+                let btn = $(this);
+                let wrapper = btn.closest(".pros-cons-field-wrapper");
+                wrapper.remove();
+            });
+        });
+    </script>
 </div>

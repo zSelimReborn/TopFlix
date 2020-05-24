@@ -1,5 +1,41 @@
 <div class="review-list short">
+    <p class="reviews-count">Recensioni scritte - {{reviews.count()}}</p>
     {% for review in reviews %}
-        {% include "review/short/view.html" %}
+    <div class="review-wrapper">
+        <div class="review-short-view">
+            {% include "review/short/view.html" %}
+        </div>
+        <div class="review-full-view hidden">
+            {% include "review/view.html" %}
+        </div>
+    </div>
     {% endfor %}
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $(".view-review").on("click", function(e) {
+            let btn = $(this);
+            let wrapper = btn.closest(".review-wrapper");
+            let wrapperList = wrapper.closest(".review-list");
+            
+            wrapperList.addClass("view-full");
+            wrapper.addClass("view-full");
+
+            wrapper.find(".review-full-view").removeClass("hidden");
+            wrapper.find(".review-short-view").addClass("hidden");
+        });
+
+        $(".back-button").on("click", function(e) {
+            let btn = $(this);
+            let wrapper = btn.closest(".review-wrapper");
+            let wrapperList = wrapper.closest(".review-list");
+            
+            wrapperList.removeClass("view-full");
+            wrapper.removeClass("view-full");
+
+            wrapper.find(".review-full-view").addClass("hidden");
+            wrapper.find(".review-short-view").removeClass("hidden");
+        });
+    });
+</script>

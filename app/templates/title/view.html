@@ -2,23 +2,38 @@
 {% block app_content %}
     <div class="title-view">
         <h1 class="name">{{t.name}}</h1>
+        <div class="rating">
+            {% include "review/summary.html" %}
+        </div>
         <div class="description-wrapper">
             <p class="description">
                 {{t.description}}
             </p>
+        </div>
+        <div class="watch-now">
+            <a href="{{ t.watch_link() }}">Guardalo ora!</a>
         </div>
         <div class="image-wrapper">
             <img src="{{t.poster}}" alt="{{t.name}}">
         </div>
 
         <div class="tab-wrapper">
-            <div class="tab reviews-wrapper">
-                <p class="reviews-count">Recensioni scritte - {{reviews.count()}}</p>
-                {% include "review/short/list.html" %}
+            <div class="tab-titles">
+                <p class="tab-title active" data-target=".reviews-wrapper">Recensioni</p>
+                <p class="tab-title" data-target=".new-review"> Scrivi una recensione</p>
             </div>
-            <div class="tab new-review">
-                {% include "review/form.html" %}
-            </div>
+            <div class="tab-contents">
+                <div class="tab reviews-wrapper active">
+                    <div class="tab-content">
+                        {% include "review/short/list.html" %}
+                    </div>
+                </div>
+                <div class="tab new-review">
+                    <div class="tab-content">
+                        {% include "review/form.html" %}
+                    </div>
+                </div>
+            </div> 
         </div>
     </div>
 {% endblock %}

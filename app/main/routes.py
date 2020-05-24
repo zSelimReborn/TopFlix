@@ -28,13 +28,16 @@ def view_title(id):
     
     reviews = Review.get_by_title(title)
     review_form = AddReviewForm(request.values, title_parent_id=str(title.id))
-    return render_template("title/view.html", title=title.name, t=title, reviews=reviews, review_form=review_form)
 
-@bp.route("/title/add", methods=["POST"])
+    review_avg = Review.get_avg_rating(title)
+    return render_template("title/view.html", title=title.name, t=title, reviews=reviews, review_form=review_form, review_avg=review_avg)
+
+@bp.route("/title/review/add", methods=["POST"])
 @login_required
 def add_review():
     review_form = AddReviewForm()
     if not review_form.validate_on_submit():
+        print(review_form.errors)
         flash("Richiesta non valida")
         return redirect(url_for("main.list_title"))
     
@@ -45,12 +48,18 @@ def add_review():
         return redirect(url_for("main.list_title"))
     
     n_review = Review(
-        title=review_form.title.data,
-        content=review_form.content.data,
+        title=escape(review_form.title.data),
+        content=escape(review_form.content.data),
         rating=review_form.rating.data,
         titleparent=title_parent.id,
-        author=current_user.id
+        author=current_user.id,
+        recommended=review_form.recommended.data
     )
+
+    n_review.save()
+
+    n_review.add_pros(review_form.pros.data)
+    n_review.add_cons(review_form.cons.data)
 
     n_review.save()
     flash("Recensione aggiunta correttamente")

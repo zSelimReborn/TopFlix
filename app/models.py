@@ -86,3 +86,8 @@ class Title(db.Document):
         t.genres = genres_created
         t.save()
         return t
+    
+    def watch_link(self):
+        base_url = "https://www.netflix.com/title/{net_id}"
+
+        return base_url.format(net_id=self.netflix_id)

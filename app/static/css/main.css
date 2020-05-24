@@ -1,0 +1,33 @@
+.tab-wrapper .tab-titles {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.tab-wrapper .tab-titles .tab-title {
+    margin-right: 10px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+}
+
+.tab-wrapper .tab-titles .tab-title.active {
+    border-bottom: 1px solid #333;
+}
+
+.tab-wrapper .tab-contents .tab:not(.active) {
+    display: none;
+}
+
+.tab-wrapper .tab-contents .tab.active {
+    display: block;
+}
+
+.review-list.short {
+    position: relative;
+}
+
+.review-list.view-full .review-wrapper:not(.view-full) {
+    display: none;
+}
