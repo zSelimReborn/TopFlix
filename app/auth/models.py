@@ -21,7 +21,10 @@ class User(UserMixin, db.Document):
         return check_password_hash(self.password, password)
 
     def get_id(self):
-        return str((self.id))
+        return str((self.id))   
+
+    def fullname(self):
+        return self.first_name + " " + self.last_name
 
     @staticmethod
     def register(form):

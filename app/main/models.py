@@ -1,6 +1,9 @@
 from flask import escape, current_app
 from app import db
 
+from app.models import Title
+from app.auth.models import User
+
 class ReviewPoint(db.Document):
     PROS_ID = 1
     CONS_ID = 0
@@ -45,6 +48,9 @@ class Review(db.Document):
             avg += review.rating
         
         return avg / review_count
+
+    def get_author(self):
+        return User.get_by_id(self.author)
 
     def __query_points(self, point_type):
         p = []
@@ -108,3 +114,11 @@ class Review(db.Document):
 
             con_obj.save()
             self.points.append(con_obj)
+
+class Discussion(db.Document):
+    title = db.StringField()
+    description = db.StringField()
+    created_at = db.DateTimeField()
+    answers = db.ListField(db.ReferenceField('Discussion'))
+    parent = db.ListField
+    upvotes = db.IntField()

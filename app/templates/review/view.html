@@ -44,4 +44,8 @@
             {% endif %}
         </p>
     </div>
+
+    <div class="published-by">
+        <p class="text">Pubblicato da: {{ review.get_author().fullname() }}</p>
+    </div>
 </div>
