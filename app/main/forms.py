@@ -11,3 +11,15 @@ class AddReviewForm(FlaskForm):
     cons = FieldList(StringField("Contro"))
     recommended = SelectField('Consigliato', coerce=int, choices=[(0,"No"), (1,"Sì")])
     submit = SubmitField('Scrivi Recensione')
+
+class AddDiscussionForm(FlaskForm):
+    title_parent_id = HiddenField("Titolo di riferimento")
+    title = StringField('Titolo', validators=[DataRequired()])
+    description = TextAreaField('Contenuto discussione', validators=[DataRequired()])
+    submit = SubmitField('Inizia discussione')
+
+class AnswerDiscussionForm(FlaskForm):
+    title_parent_id = HiddenField("Titolo di riferimento")
+    description = TextAreaField('La tua risposta', validators=[DataRequired()])
+    submit = SubmitField('Invia')
+

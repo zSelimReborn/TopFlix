@@ -5,7 +5,9 @@ from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
 from flask_security import Security
+
 import os
+import babel
 
 db = MongoEngine()
 login = LoginManager()

@@ -1,0 +1,47 @@
+<ul class="discussion-list title-{{t.id|string()}}">
+    {% for discussion in t.discussions() %}
+        {% if not discussion.is_answer %}
+        <li class="discussion-wrapper">
+            <div class="upvotes-wrapper">
+                {% with d = discussion %}
+                {% include "discussion/upvotes.html" %}
+                {% endwith %}
+            </div>
+            <div class="discussion-short">
+                {% include "discussion/short/view.html" %}
+            </div>
+            <div class="discussion-full hidden">
+                {% include "discussion/view.html" %}
+            </div>
+        </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<script type="text/javascript">
+    $(function() {
+        $(".view-discussion").on("click", function(e) {
+            let btn = $(this);
+            let wrapper = btn.closest(".discussion-wrapper");
+            let wrapperList = wrapper.closest(".discussion-list");
+            
+            wrapperList.addClass("view-full");
+            wrapper.addClass("view-full");
+
+            wrapper.find(".discussion-full").removeClass("hidden");
+            wrapper.find(".discussion-short").addClass("hidden");
+        });
+
+        $(".back-discussion").on("click", function(e) {
+            let btn = $(this);
+            let wrapper = btn.closest(".discussion-wrapper");
+            let wrapperList = wrapper.closest(".discussion-list");
+            
+            wrapperList.removeClass("view-full");
+            wrapper.removeClass("view-full");
+
+            wrapper.find(".discussion-full").addClass("hidden");
+            wrapper.find(".discussion-short").removeClass("hidden");
+        });
+    });
+</script>

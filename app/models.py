@@ -4,6 +4,8 @@ from app.api.adapters import TitleAdapter, GenreAdapter
 from datetime import datetime
 from time import time
 
+from app.main.models import Review, Discussion
+
 class Genre(db.Document):
     netflix_id = db.StringField()
     name = db.StringField()
@@ -81,7 +83,6 @@ class Title(db.Document):
             for genre in genres:
                 genre_created = Genre.create_if_not_exists(genre)
                 genres_created.append(genre_created)
-                #Title.associate_title_genre(t, genre_created)
 
         t.genres = genres_created
         t.save()
@@ -91,3 +92,10 @@ class Title(db.Document):
         base_url = "https://www.netflix.com/title/{net_id}"
 
         return base_url.format(net_id=self.netflix_id)
+
+    def reviews(self):
+        return Review.get_by_title(self)
+
+    def discussions(self):
+        return Discussion.get_by_title(self)
+        

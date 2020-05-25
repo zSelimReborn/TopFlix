@@ -31,3 +31,11 @@
 .review-list.view-full .review-wrapper:not(.view-full) {
     display: none;
 }
+
+.discussion-list {
+    position: relative;
+}
+
+.discussion-list.view-full .discussion-wrapper:not(.view-full) {
+    display: none;
+}

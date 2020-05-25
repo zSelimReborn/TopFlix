@@ -1,0 +1,13 @@
+<div class="answers-list-wrapper">
+    {% for answer in discussion.answers %}
+        <div class="answer-wrapper">
+            <p class="content">{{ answer.description }}</p>
+            <p class="author">Risposta di {{ answer.get_author().fullname() }}</p>
+            <div class="answer-upvotes">
+                {% with d = answer %}
+                    {% include "discussion/upvotes.html" %}
+                {% endwith %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

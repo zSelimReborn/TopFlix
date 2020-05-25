@@ -1,0 +1,37 @@
+<div class="discussion discussion-full">
+    <a href="#" class="back-discussion btn btn-link">Torna a tutte le discussioni</a>
+    <div class="upper-info">
+        <p class="discussion-title">{{ discussion.title }}</p>
+        <p class="author-info">Postato da: {{ discussion.get_author().fullname() }}</p>
+    </div>
+    <div class="discussion-content">
+        <p class="content">
+            {{discussion.description}}
+        </p>
+    </div>
+    <div class="posted">
+        <p class="posted-on">{{ discussion.created_at.strftime('%d/%m/%Y') }}</p>
+    </div>
+
+    <div class="answer-form">
+        <button class="answer-btn btn btn-default">Rispondi</button>
+        <div class="form-wrapper hidden">
+            {% include "discussion/answer/form.html" %}
+        </div>
+    </div>
+
+    <div class="answers-list">
+        {% include "discussion/answer/list.html" %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $(".answer-btn").on("click", function() {
+            let btn = $(this);
+            let wrapper = btn.closest(".answer-form");
+
+            wrapper.find(".form-wrapper").removeClass("hidden");
+        });
+    });
+</script>
