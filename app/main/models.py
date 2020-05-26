@@ -22,7 +22,10 @@ class Review(db.Document):
 
     @staticmethod
     def get_by_id(id):
-        return Review.objects.get(id=id)
+        try:
+            return Review.objects.get(id=id)
+        except:
+            return None
     
     @staticmethod
     def get_by_title(title):
@@ -44,8 +47,15 @@ class Review(db.Document):
         return avg / review_count
 
     def get_author(self):
-        return User.get_by_id(self.author)
-
+        try:
+            return User.get_by_id(self.author)
+        except:
+            return None
+    
+    def is_author(self, user):
+        author = self.get_author()
+        return author.id == user.id
+    
     def __query_points(self, point_type):
         p = []
         for point in self.points:
@@ -58,12 +68,34 @@ class Review(db.Document):
     
     def cons(self):
         return self.__query_points(ReviewPoint.CONS_ID)
+    
+    def pros_as_string(self):
+        pros = self.pros()
+        pros_string = []
+        for pro in pros:
+            pros_string.append(pro.content)
+        
+        return pros_string
+    
+    def cons_as_string(self):
+        cons = self.cons()
+        cons_string = []
+        for con in cons:
+            cons_string.append(con.content)
+        
+        return cons_string
+
+    def remove_all_points(self):
+        for point in self.points:
+            point.delete
+        
+        self.points = []
         
     def put_pros(self, pros):
         pros_object = []
         for pro in pros:
             pro_obj = ReviewPoint(
-                content=escape(pro),
+                content=pro,
                 role=ReviewPoint.PROS_ID,
                 parent=self.id
             )
@@ -76,7 +108,7 @@ class Review(db.Document):
     def add_pros(self, pros):
         for pro in pros:
             pro_obj = ReviewPoint(
-                content=escape(pro),
+                content=pro,
                 role=ReviewPoint.PROS_ID,
                 parent=self.id
             )
@@ -88,7 +120,7 @@ class Review(db.Document):
         cons_object = []
         for con in cons:
             con_obj = ReviewPoint(
-                content=escape(con),
+                content=con,
                 role=ReviewPoint.CONS_ID,
                 parent=self.id
             )
@@ -101,7 +133,7 @@ class Review(db.Document):
     def add_cons(self, cons):
         for con in cons:
             con_obj = ReviewPoint(
-                content=escape(con),
+                content=con,
                 role=ReviewPoint.CONS_ID,
                 parent=self.id
             )

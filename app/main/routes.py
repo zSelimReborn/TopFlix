@@ -7,10 +7,11 @@ import html
 from datetime import datetime
 from time import time
 
+from app.auth.models import User
 from app.models import *
 from app.main.tasks import process_netflix_api
 from app.main.models import Review
-from app.main.forms import AddReviewForm, AddDiscussionForm, AnswerDiscussionForm
+from app.main.forms import AddReviewForm, EditReviewForm, AddDiscussionForm, AnswerDiscussionForm
 
 
 @bp.route("/")
@@ -32,12 +33,12 @@ def view_title(id):
 
     reviews = Review.get_by_title(title)
     review_form = AddReviewForm(request.values, title_parent_id=str(title.id))
-    review_avg = Review.get_avg_rating(title)
+    review_form.custom_action = url_for('main.add_review')
 
     discussion_form = AddDiscussionForm(request.values, title_parent_id=str(title.id))
     answer_form = AnswerDiscussionForm(request.values, title_parent_id=str(title.id))
 
-    return render_template("title/view.html", title=title.name, t=title, reviews=reviews, review_form=review_form, review_avg=review_avg, discussion_form=discussion_form, answer_form=answer_form)
+    return render_template("title/view.html", title=title.name, t=title, reviews=reviews, review_form=review_form, discussion_form=discussion_form, answer_form=answer_form)
 
 @bp.route("/title/review/add", methods=["POST"])
 @login_required
@@ -71,6 +72,67 @@ def add_review():
     n_review.save()
     flash("Recensione aggiunta correttamente")
     return redirect(url_for("main.view_title", id=title_parent_id))
+
+@bp.route("/title/review/<review_id>/remove")
+@login_required
+def remove_review(review_id):
+    review = Review.get_by_id(review_id)
+    if review is None:
+        flash("Recensione non trovata")
+        return redirect(url_for("main.list_title"))
+    
+    title_id = review.titleparent
+    if not review.is_author(current_user):
+        flash("Non è possibile cancellare recensioni di altri utenti")
+        return redirect(url_for("main.view_title", id=title_id))
+    
+
+    review.delete()
+    flash("Recensione eliminata correttamente")
+    return redirect(url_for("main.view_title", id=title_id))
+
+@bp.route("/title/review/<review_id>/edit", methods=["GET", "POST"])
+@login_required
+def edit_review(review_id):
+    review = Review.get_by_id(review_id)
+    if review is None:
+        flash("Recensione non trovata")
+        return redirect(url_for("main.list_title"))
+    
+    title_id = review.titleparent
+    if not review.is_author(current_user):
+        flash("Non è possibile modificare recensioni di altri utenti")
+        return redirect(url_for("main.view_title", id=title_id))
+
+    review_form = EditReviewForm()
+    if not review_form.validate_on_submit():
+        review_form.title.data = review.title
+        review_form.content.data = review.content
+        review_form.rating.data = review.rating
+        review_form.recommended.data = review.recommended
+
+        for pros in review.pros_as_string():
+            review_form.pros.append_entry(pros)
+        
+        for cons in review.cons_as_string():
+            review_form.cons.append_entry(cons)
+
+        return render_template("review/edit.html", title="Modifica recensione {name}".format(name=review.title), review_form=review_form)
+
+    
+    review.title = review_form.title.data
+    review.content = review_form.content.data
+    review.rating = review_form.rating.data
+    review.recommended = True if review_form.recommended.data == 1 else False
+    review.remove_all_points()
+
+    review.add_pros(review_form.pros.data)
+    review.add_cons(review_form.cons.data)
+    review.save()
+
+    flash("Recensione modificata correttamente")
+    return redirect(url_for("main.view_title", id=title_id))
+
     
 @bp.route("/title/discussion/add", methods=["POST"])
 @login_required

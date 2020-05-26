@@ -2,6 +2,21 @@
     <p class="reviews-count">Recensioni scritte - {{reviews.count()}}</p>
     {% for review in reviews %}
     <div class="review-wrapper">
+        <div class="reviews-action">
+            {% if review.is_author(current_user) %}
+            <div class="remove-btn">
+                <a href="{{ url_for('main.remove_review', review_id=review.id|string) }}" class="btn btn-link" title="Cancella recensione">
+                    <span class="material-icons">cancel</span>
+                </a>
+            </div>
+
+            <div class="edit-btn">
+                <a href="{{ url_for('main.edit_review', review_id=review.id|string) }}" class="btn btn-link" title="Modifica recensione">
+                    <span class="material-icons">edit</span>
+                </a>
+            </div>
+            {% endif %}
+        </div>
         <div class="review-short-view">
             {% include "review/short/view.html" %}
         </div>

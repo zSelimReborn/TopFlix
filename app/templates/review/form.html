@@ -1,6 +1,6 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 <div class="review-form">
-    <form action="{{url_for('main.add_review')}}" role="form" method="POST" class="form" >
+    <form action="{{review_form.get_custom_action()}}" role="form" method="POST" class="form" >
         {{ review_form.hidden_tag() }} 
         {{ review_form.title_parent_id() }}
         {{ wtf.form_errors(review_form, hiddens="only") }}
@@ -15,7 +15,7 @@
         <div class="form-group required">
             <label for="review_rating" class="control-label">Valutazione</label>
             {{ review_form.rating(class="form-control", id="review_rating", required="required", type="hidden") }}
-            <p class="display-slider">1.0</p>
+            <p class="display-slider">{{ review_form.rating.data }}</p>
             <div class="slider"></div>
         </div>
 
@@ -24,14 +24,24 @@
                 <label for="review_pros" class="control-label">Pro</label>
                 <button type="button" class="add add-pros btn btn-default btn-sm">Aggiungi</button>
                 <div class="field-list">
-
+                    {% for pros in review_form.pros.data %}
+                        <div class="pros-cons-field-wrapper pros-field-wrapper">
+                            <input type="text" data-index="{{loop.index0}}" class="form-control pros-field" name="pros-{{loop.index0}}" value="{{pros}}">
+                            <button class='pros-cons-rm' type='button'><span class='material-icons'>remove</span></button>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-md-6 pros-cons-wrapper">
                 <label for="review_cons" class="control-label">Contro</label>
                 <button type="button" class="add add-cons btn btn-default btn-sm">Aggiungi</button>
                 <div class="field-list">
-
+                    {% for cons in review_form.cons.data %}
+                        <div class="pros-cons-field-wrapper cons-field-wrapper">
+                            <input type="text" data-index="{{loop.index0}}" class="form-control cons-field" name="cons-{{loop.index0}}" value="{{cons}}">
+                            <button class='pros-cons-rm' type='button'><span class='material-icons'>remove</span></button>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -51,6 +61,9 @@
                 max: 10.0,
                 min: 1.0,
                 step: 0.1,
+                {% if review_form.rating.data %}
+                value: {{ review_form.rating.data }},
+                {% endif %}
                 slide: (event, ui) => {
                     $("#review_rating").val(ui.value.toFixed(1));
                     $(".display-slider").text(ui.value.toFixed(1));

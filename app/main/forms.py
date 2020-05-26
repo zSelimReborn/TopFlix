@@ -1,3 +1,4 @@
+from flask import url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField, FieldList, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, InputRequired
@@ -11,6 +12,14 @@ class AddReviewForm(FlaskForm):
     cons = FieldList(StringField("Contro"))
     recommended = SelectField('Consigliato', coerce=int, choices=[(0,"No"), (1,"Sì")])
     submit = SubmitField('Scrivi Recensione')
+
+    def get_custom_action(self):
+        return getattr(self, "custom_action", "")
+
+
+class EditReviewForm(AddReviewForm):
+    submit = SubmitField("Modifica recensione")
+    
 
 class AddDiscussionForm(FlaskForm):
     title_parent_id = HiddenField("Titolo di riferimento")

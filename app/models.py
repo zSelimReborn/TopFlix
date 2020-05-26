@@ -99,3 +99,5 @@ class Title(db.Document):
     def discussions(self):
         return Discussion.get_by_title(self)
         
+    def rating_average(self):
+        return Review.get_avg_rating(self)
