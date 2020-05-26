@@ -2,6 +2,20 @@
     {% for discussion in t.discussions() %}
         {% if not discussion.is_answer %}
         <li class="discussion-wrapper">
+            <div class="discussion-actions">
+                {% if discussion.is_author(current_user) %}
+                    <div class="remove-wrapper">
+                        <a href="{{ url_for('main.remove_discussion', discussion_id=discussion.id|string) }}" class="btn btn-link remove-discussion">
+                            <span class="material-icons">cancel</span>
+                        </a>
+                    </div>
+                    <div class="edit-wrapper">
+                        <a href="{{ url_for('main.edit_discussion', discussion_id=discussion.id|string) }}" class="btn btn-link edit-discussion">
+                            <span class="material-icons">edit</span>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
             <div class="upvotes-wrapper">
                 {% with d = discussion %}
                 {% include "discussion/upvotes.html" %}

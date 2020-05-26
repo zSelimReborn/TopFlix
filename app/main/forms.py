@@ -27,8 +27,24 @@ class AddDiscussionForm(FlaskForm):
     description = TextAreaField('Contenuto discussione', validators=[DataRequired()])
     submit = SubmitField('Inizia discussione')
 
+    def get_custom_action(self):
+        return getattr(self, "custom_action", "")
+
+class EditDiscussionForm(AddDiscussionForm):
+    submit = SubmitField("Modifica discussione")
+
 class AnswerDiscussionForm(FlaskForm):
     title_parent_id = HiddenField("Titolo di riferimento")
     description = TextAreaField('La tua risposta', validators=[DataRequired()])
     submit = SubmitField('Invia')
 
+    def get_custom_action(self, discussion=None):
+        custom_action = getattr(self, "custom_action", "")
+        if custom_action == "":
+            if discussion is not None:
+                return url_for("main.add_answer", discussion_id=discussion.id)
+        
+        return custom_action
+
+class EditAnswerDiscussionForm(AnswerDiscussionForm):
+    submit = SubmitField("Modifica")

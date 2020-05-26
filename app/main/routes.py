@@ -11,7 +11,7 @@ from app.auth.models import User
 from app.models import *
 from app.main.tasks import process_netflix_api
 from app.main.models import Review
-from app.main.forms import AddReviewForm, EditReviewForm, AddDiscussionForm, AnswerDiscussionForm
+from app.main.forms import AddReviewForm, EditReviewForm, AddDiscussionForm, EditDiscussionForm, AnswerDiscussionForm, EditAnswerDiscussionForm
 
 
 @bp.route("/")
@@ -36,6 +36,8 @@ def view_title(id):
     review_form.custom_action = url_for('main.add_review')
 
     discussion_form = AddDiscussionForm(request.values, title_parent_id=str(title.id))
+    discussion_form.custom_action = url_for("main.add_discussion")
+
     answer_form = AnswerDiscussionForm(request.values, title_parent_id=str(title.id))
 
     return render_template("title/view.html", title=title.name, t=title, reviews=reviews, review_form=review_form, discussion_form=discussion_form, answer_form=answer_form)
@@ -163,6 +165,54 @@ def add_discussion():
     flash("Discussione aggiunta correttamente")
     return redirect(url_for("main.view_title", id=title_parent_id))
 
+@bp.route("/title/discussion/<discussion_id>/remove")
+@login_required
+def remove_discussion(discussion_id):
+    discussion = Discussion.get_by_id(discussion_id)
+    if discussion is None:
+        flash("Discussione non trovata")
+        return redirect(url_for("main.list_title"))
+    
+    title_id = discussion.parent
+    if not discussion.is_author(current_user):
+        flash("Non è possibile eliminare discussioni di altri utenti")
+        return redirect(url_for("main.view_title", id=title_id))
+    
+    discussion.delete_all_answers()
+    discussion.delete_all_upvotes()
+    discussion.delete()
+
+    flash("Discussione eliminata correttamente")
+    return redirect(url_for("main.view_title", id=title_id))
+
+@bp.route("/title/discussion/<discussion_id>/edit", methods=["GET", "POST"])
+@login_required
+def edit_discussion(discussion_id):
+    discussion = Discussion.get_by_id(discussion_id)
+    if discussion is None:
+        flash("Discussione non trovata")
+        return redirect(url_for("main.list_title"))
+    
+    title_id = discussion.parent
+    if not discussion.is_author(current_user):
+        flash("Non è possibile modificare discussioni di altri utenti")
+        return redirect(url_for("main.view_title", id=title_id))
+    
+    discussion_form = EditDiscussionForm()
+    if not discussion_form.validate_on_submit():
+        discussion_form.title.data = discussion.title
+        discussion_form.description.data = discussion.description
+
+        return render_template("discussion/edit.html", discussion_form=discussion_form)
+
+    discussion.title = discussion_form.title.data
+    discussion.description = discussion_form.description.data
+
+    discussion.save()
+    flash("Discussione modificata correttamente")
+    return redirect(url_for("main.view_title", id=title_id))
+
+
 @bp.route("/title/discussion/<discussion_id>/answer/add", methods=["POST"])
 @login_required
 def add_answer(discussion_id):
@@ -203,6 +253,33 @@ def add_answer(discussion_id):
     discussion.save()
     flash("Risposta aggiunta correttamente")
     return redirect(url_for("main.view_title", id=title_parent_id))
+
+@bp.route("/title/discussion/answer/<answer_id>/edit", methods=["GET", "POST"])
+@login_required
+def edit_answer(answer_id):
+    answer = Discussion.get_by_id(answer_id)
+    if answer is None:
+        flash("Risposta non trovata")
+        return redirect(url_for("main.list_title"))
+    
+    title_id = answer.parent
+    if not answer.is_author(current_user):
+        flash("Non è possibile modificare risposte di altri utenti")
+        return redirect(url_for("main.view_title", id=title_id))
+    
+    answer_form = EditAnswerDiscussionForm()
+    if not answer_form.validate_on_submit():
+        answer_form.description.data = answer.description
+        answer_form.custom_action = url_for("main.edit_answer", answer_id=answer_id)
+
+        return render_template("discussion/answer/edit.html", answer_form=answer_form, discussion=None)
+    
+    answer.description = answer_form.description.data
+    answer.save()
+
+    flash("Risposta modificata correttamente")
+    return redirect(url_for("main.view_title", id=title_id))
+    
 
 @bp.route("/title/discussion/<discussion_id>/upvotes/add", methods=["POST"])
 @login_required

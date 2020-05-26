@@ -54,7 +54,7 @@ class Review(db.Document):
     
     def is_author(self, user):
         author = self.get_author()
-        return author.id == user.id
+        return author.id == getattr(user, "id", "")
     
     def __query_points(self, point_type):
         p = []
@@ -150,7 +150,7 @@ class Discussion(db.Document):
     title = db.StringField()
     description = db.StringField()
     created_at = db.DateTimeField()
-    answers = db.ListField(db.ReferenceField('Discussion'))
+    answers = db.ListField(db.ReferenceField('Discussion', reverse_delete_rule=db.PULL))
     parent = db.ObjectIdField()
 
     upvotes = db.ListField(db.ReferenceField('Upvote'))
@@ -172,7 +172,20 @@ class Discussion(db.Document):
     
     def get_author(self):
         return User.objects.get(id=self.author)
+
+    def is_author(self, user):
+        author = self.get_author()
+        return author.id == getattr(user, "id", "")
+
+    def delete_all_answers(self):
+        if not self.is_answer:
+            for answer in self.answers:
+                answer.delete()
     
+    def delete_all_upvotes(self):
+        for upvote in self.upvotes:
+            upvote.delete()
+
     def upvotes_count(self):
         return Upvote.objects.filter(parent=self.id).count()
     

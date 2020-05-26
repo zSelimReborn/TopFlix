@@ -1,4 +1,4 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 <div class="new-answer-form">
-    {{ wtf.quick_form(answer_form, action=url_for('main.add_answer', discussion_id=discussion.id|string()), method="POST") }}
+    {{ wtf.quick_form(answer_form, action=answer_form.get_custom_action(discussion), method="POST") }}
 </div>
