@@ -298,6 +298,20 @@ def add_upvote(discussion_id):
     }
     
     return response
+
+@bp.route("/title/<title_id>/like")
+@login_required
+def toggle_like(title_id):
+    title = Title.get_by_id(title_id)
+    if title is None:
+        flash("Titolo non trovato")
+        return redirect(url_for("main.list_title"))
+    
+    like = request.args.get("like") == "1"
+
+    
+    current_user.manage_titles(title, like)
+    return redirect(url_for("main.view_title", id=title.id))
         
 
 @bp.errorhandler(404)

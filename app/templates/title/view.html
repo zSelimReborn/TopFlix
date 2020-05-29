@@ -13,6 +13,21 @@
         <div class="watch-now">
             <a href="{{ t.watch_link() }}">Guardalo ora!</a>
         </div>
+        <div class="like-wrapper">
+            {% set like_classes = "has_like" if current_user.has_liked_title(t) else "" %}
+            {% set dislike_classes = "has_dislike" if current_user.has_disliked_title(t) else "" %}
+
+            <div class="like {{ like_classes }}">
+                <a href="{{ url_for('main.toggle_like', title_id=t.id|string, like=1) }}">
+                    <span class="material-icons-outlined">thumb_up</span>
+                </a>
+            </div>
+            <div class="dislike {{ dislike_classes }}">
+                <a href="{{ url_for('main.toggle_like', title_id=t.id|string, like=0) }}">
+                    <span class="material-icons-outlined">thumb_down</span>
+                </a>
+            </div>
+        </div>
         <div class="image-wrapper">
             <img src="{{t.poster}}" alt="{{t.name}}">
         </div>

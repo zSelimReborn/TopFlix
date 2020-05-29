@@ -49,7 +49,10 @@ class Title(db.Document):
 
     @staticmethod
     def get_by_id(id):
-        return Title.objects.get(id=id)
+        try:
+            return Title.objects.get(id=id)
+        except:
+            return None
 
     @staticmethod
     def find_by_netflixid(nid):

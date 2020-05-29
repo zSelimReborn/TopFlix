@@ -6,11 +6,13 @@ import jwt
 from app import db, login
 
 class User(UserMixin, db.Document):
-    first_name  = db.StringField()
-    last_name   = db.StringField()
-    password    = db.StringField()
-    email       = db.StringField()
-    avatar      = db.StringField()
+    first_name      = db.StringField()
+    last_name       = db.StringField()
+    password        = db.StringField()
+    email           = db.StringField()
+    avatar          = db.StringField()
+    titles_liked    = db.ListField(db.ReferenceField('Title'))
+    titles_disliked = db.ListField(db.ReferenceField('Title'))
     
     meta = {'collection': 'User'}
 
@@ -25,6 +27,44 @@ class User(UserMixin, db.Document):
 
     def fullname(self):
         return self.first_name + " " + self.last_name
+    
+    ''' se il parametro like è True allora è un like altrimenti un dislike '''
+    def manage_titles(self, title, like=True):
+        
+        if like == True:
+            if self.has_liked_title(title):
+                self.update(pull__titles_liked=title)
+            else:
+                self.update(pull__titles_disliked=title)
+                self.titles_liked.append(title)
+        else:
+            if self.has_disliked_title(title):
+                self.update(pull__titles_disliked=title)
+            else:
+                self.update(pull__titles_liked=title)
+                self.titles_disliked.append(title)
+        
+        self.save()
+        
+    def search_titles_disliked(self, title):
+        for t in self.titles_disliked:
+            if t.id == title.id:
+                return t
+        
+        return None
+
+    def has_disliked_title(self, title):
+        return (self.search_titles_disliked(title) != None)
+        
+    def search_titles_liked(self, title):
+        for t in self.titles_liked:
+            if t.id == title.id:
+                return t
+        
+        return None
+    
+    def has_liked_title(self, title):
+        return (self.search_titles_liked(title) != None)
 
     @staticmethod
     def register(form):

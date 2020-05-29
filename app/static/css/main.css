@@ -39,3 +39,38 @@
 .discussion-list.view-full .discussion-wrapper:not(.view-full) {
     display: none;
 }
+
+.title-view .like-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.title-view .like-wrapper > div {
+    margin-right: 20px;
+}
+
+.title-view .like-wrapper a {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-view .like-wrapper a .material-icons-outlined {
+    color: #333;
+}
+
+.title-view .like-wrapper .has_like a, .title-view .like-wrapper .has_dislike a {
+    border-color: #333;
+}
+
+.title-view .like-wrapper a:focus {
+    outline: none;
+    text-decoration: none;
+}
