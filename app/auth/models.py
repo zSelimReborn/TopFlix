@@ -28,6 +28,11 @@ class User(UserMixin, db.Document):
 
     @staticmethod
     def register(form):
+        email = form.email.data
+        if User.get_by_email(email) is not None:
+            raise Exception("Email già registrata")
+
+
         nUser = User()
 
         nUser.first_name = form.first_name.data
@@ -45,9 +50,27 @@ class User(UserMixin, db.Document):
         if user is None:
             raise Exception("Email non registrata")
         
+        if password.strip() == "":
+            raise Exception("Password non inserita")
+
         if not user.check_password(password):
             raise Exception("Password errata")
 
+        return user
+    
+    @staticmethod
+    def facebook_login(email, fullname):
+        user = User.get_by_email(email)
+        if user is None:
+            names = fullname.split()
+            user = User(
+                first_name=names[0],
+                last_name=names[len(names)-1],
+                email=email
+            )
+
+            user.save()
+        
         return user
 
     @staticmethod

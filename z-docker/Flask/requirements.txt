@@ -38,3 +38,4 @@ wheel==0.24.0
 flask-security
 flask-mongoengine
 flask-dance
+rauth

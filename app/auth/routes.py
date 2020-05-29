@@ -1,9 +1,36 @@
 from app.auth import bp
-from flask import request, escape, render_template, redirect, flash, url_for, jsonify
+from flask import current_app, request, escape, render_template, redirect, flash, url_for, jsonify
 from app.auth.forms import LoginForm, RegisterForm, EditProfileForm, RequestPasswordForm, ResetPasswordForm
 from app.auth.models import User
 from flask_login import current_user, login_user, logout_user, login_required
 from app.auth.email import send_request_password_email
+from app.auth.oauth import FacebookLogin
+
+import json
+
+@bp.route("/fb")
+def fb_login():
+    facebook = FacebookLogin()
+
+    return redirect(facebook.get_authorize_url())
+
+@bp.route("/fb/callback")
+def fb_callback():
+    if not 'code' in request.args:
+        flash("Login con Facebook non effettuato. Riprova")
+        return redirect(url_for("auth.login"))
+    
+    code = request.args.get("code")
+
+    facebook = FacebookLogin(code)
+    session = facebook.session()
+
+    me = session.get("me?fields=id,name,email,age_range").json()
+    user = User.facebook_login(me["email"], me["name"])
+
+    login_user(user)
+    return redirect(url_for("main.homepage"))
+
 
 @bp.route("/login", methods=['GET', 'POST'])
 def login():
@@ -33,13 +60,15 @@ def register():
         form = RegisterForm()
         if form.validate_on_submit():
             nUser = User.register(form)
-            flash('Register confirmed for user {}'.format(
+            flash('Registrazione confermata per utente {}'.format(
                 nUser.email))
+            
+            login_user(nUser)
             return redirect(url_for('main.homepage'))
         return render_template('auth/user/register.html', title="Register", form=form)
     except Exception as e:
-        print("Sono qui in exception")
-        return jsonify({"error": str(e)})
+        flash("Errore: " + str(e))
+        return redirect(url_for("auth.login"))
 
 @bp.route("/logout")
 def logout():

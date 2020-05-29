@@ -9,5 +9,10 @@
         </div>
     </div>
 
-    <a href="{{ url_for('auth.reset_password_request') }}" class="forgot-password">Forgot Password ?</a> {% endblock %}
+    <a href="{{ url_for('auth.reset_password_request') }}" class="forgot-password">Forgot Password ?</a>
+
+    <div class="social-container">
+        {% include "auth/user/social_login.html" %}
+    </div>
+    {% endblock %}
 </div>
