@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+<div class="genre-liked-survey">
+    {% block app_content %}
+    <h1>Parlaci un po' di te</h1>
+    <p>Ti chiediamo solo un po' del tuo preziosissimo tempo per poter essere sicuri di consigliarti sempre qualcosa di tuo gradimento! </p>
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="legend">Quali sono i generi che più ti piacciono?</h2>
+            <form action="" role="form" method="POST" class="form" >
+                {{ form.hidden_tag() }} 
+                {{ form.survey_id() }}
+                {{ wtf.form_errors(form, hiddens="only") }}
+                
+                {% for genre in form.genres() %}
+                    <div class="form-group">
+                        <input type="checkbox" name="genres_liked-{{loop.index0}}" id="genre_{{ genre.id|string }}" class="form-check-input" value="{{ genre.id|string }}" >
+                        <label for="genre_{{ genre.id|string }}" class="control-label">{{ genre.name }}</label>
+                    </div>
+                {% endfor %}
+                {{ form.submit(class="btn btn-default") }}
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</div>

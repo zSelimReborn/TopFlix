@@ -1,4 +1,6 @@
-from flask import request, escape, render_template, redirect, flash, url_for, jsonify
+from functools import wraps
+
+from flask import request, escape, render_template, redirect, flash, url_for, jsonify, current_app
 from app.main import bp 
 from flask_login import current_user, login_required
 
@@ -10,22 +12,39 @@ from time import time
 from app.auth.models import User
 from app.models import *
 from app.main.tasks import process_netflix_api
-from app.main.models import Review
+from app.main.models import Review, Survey
 from app.main.forms import AddReviewForm, EditReviewForm, AddDiscussionForm, EditDiscussionForm, AnswerDiscussionForm, EditAnswerDiscussionForm
 
+from .survey import SurveySwitchForm
+
+''' function eseguita dopo che un utente completa il login '''
+def check_survey_mandatory(function):
+    @wraps(function)
+    def wrapper(**kwargs):
+        if current_user.is_authenticated:
+            mandatory_surveys = Survey.objects.filter(mandatory=True)
+            for survey in mandatory_surveys:
+                if survey.user_not_compiled(current_user):
+                    return redirect(url_for("main.show_survey", unique_key=survey.unique_key))
+
+        return function(**kwargs)
+    return wrapper
 
 @bp.route("/")
+@check_survey_mandatory
 def homepage():
     #process_netflix_api()   
 
     return render_template("homepage.html", user=current_user)
 
 @bp.route("/title")
+@check_survey_mandatory
 def list_title():
     titles = Title.objects
     return render_template("title/list.html", titles=titles)
 
 @bp.route("/title/<id>")
+@check_survey_mandatory
 def view_title(id):
     title = Title.get_by_id(id)
     if title is None:
@@ -95,6 +114,7 @@ def remove_review(review_id):
 
 @bp.route("/title/review/<review_id>/edit", methods=["GET", "POST"])
 @login_required
+@check_survey_mandatory
 def edit_review(review_id):
     review = Review.get_by_id(review_id)
     if review is None:
@@ -187,6 +207,7 @@ def remove_discussion(discussion_id):
 
 @bp.route("/title/discussion/<discussion_id>/edit", methods=["GET", "POST"])
 @login_required
+@check_survey_mandatory
 def edit_discussion(discussion_id):
     discussion = Discussion.get_by_id(discussion_id)
     if discussion is None:
@@ -256,6 +277,7 @@ def add_answer(discussion_id):
 
 @bp.route("/title/discussion/answer/<answer_id>/edit", methods=["GET", "POST"])
 @login_required
+@check_survey_mandatory
 def edit_answer(answer_id):
     answer = Discussion.get_by_id(answer_id)
     if answer is None:
@@ -313,6 +335,35 @@ def toggle_like(title_id):
     current_user.manage_titles(title, like)
     return redirect(url_for("main.view_title", id=title.id))
         
+@bp.route("/survey/<unique_key>", methods=["GET", "POST"])
+@login_required
+def show_survey(unique_key):
+    survey = Survey.get_by_unique_key(unique_key)
+    if survey is None:
+        flash("Sondaggio non disponibile")
+        return redirect(url_for("main.homepage"))
+
+    if survey.user_already_compiled(current_user):
+        flash("Sondaggio già completato")
+        return redirect(url_for("main.homepage"))
+
+    survey_helper = SurveySwitchForm()
+
+    info = survey_helper.get_info(unique_key)
+    if info is None:
+        flash("Sondaggio non trovato")
+        return redirect(url_for("main.homepage"))
+    
+    form_class, function = info["form"], info["on_submit"]
+    
+    form = form_class(survey_id=str(survey.id))
+
+    if form.validate_on_submit():
+        function(form)
+        return redirect(url_for(form.return_url_for))
+    
+    return render_template(survey.template_path, form=form)
+
 
 @bp.errorhandler(404)
 def handle_notfound(e):

@@ -228,3 +228,31 @@ class Discussion(db.Document):
         
         return self.upvotes_value()
         
+class Survey(db.Document):
+    unique_key      = db.StringField(unique=True)
+    template_path   = db.StringField()
+    users_done      = db.ListField(db.ReferenceField(User))
+    mandatory       = db.BooleanField()
+
+    @staticmethod
+    def get_by_id(id):
+        try:
+            survey = Survey.objects.get(id=id)
+            return survey
+        except:
+            return None
+
+    @staticmethod
+    def get_by_unique_key(unique_key):
+        try:
+            survey = Survey.objects.filter(unique_key=unique_key).first()
+            return survey
+        except:
+            return None
+    
+    def user_already_compiled(self, user):
+        survey = Survey.objects.filter(id=self.id, users_done__contains=user.id)
+        return survey.count() >= 1
+    
+    def user_not_compiled(self, user):
+        return not self.user_already_compiled(user)

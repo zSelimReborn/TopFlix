@@ -36,7 +36,7 @@ def process_netflix_api():
         "country_andorunique":"unique",
         "start_year":"1972",
         "orderby":"rating",
-        "limit":"5",
+        "limit":"20",
         "countrylist":"269",
         "audio":"italian",
         "offset": offset,
@@ -53,5 +53,5 @@ def process_netflix_api():
             print("GenreID: %s - Name: %s" % (genre.id, genre.name))
     
 
-    write_offset(str(offset + 10))
+    write_offset(str(offset + 20))
 

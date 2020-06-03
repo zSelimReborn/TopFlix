@@ -1,7 +1,9 @@
-from flask import url_for
+from flask import url_for, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField, FieldList, SelectField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField, FieldList, SelectField, FormField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, InputRequired
+
+from app.models import Genre
 
 class AddReviewForm(FlaskForm):
     title_parent_id = HiddenField("Titolo di riferimento")
@@ -48,3 +50,13 @@ class AnswerDiscussionForm(FlaskForm):
 
 class EditAnswerDiscussionForm(AnswerDiscussionForm):
     submit = SubmitField("Modifica")
+
+class SurveyGenreForm(FlaskForm):
+    return_url_for = "main.homepage"
+
+    survey_id = HiddenField()
+    genres_liked = FieldList(StringField())
+    submit = SubmitField("Salva")
+
+    def genres(self):
+        return Genre.objects()

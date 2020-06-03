@@ -1,7 +1,7 @@
-from flask import Flask, request, current_app
+from flask import Flask, request, current_app, redirect, url_for
 from .config import Config
 from flask_mongoengine import MongoEngine
-from flask_login import LoginManager
+from flask_login import LoginManager, user_logged_in
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
 from flask_security import Security
@@ -30,8 +30,22 @@ def create_app(config_class=Config):
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
-    #from app.auth.oauth import facebook_bp
-    #app.register_blueprint(facebook_bp, url_prefix="/fb")
+    @app.before_first_request
+    def insert_genre_survey():
+        from app.main.models import Survey
+
+        surveys = Survey.objects()
+        genre_survey = Survey(
+            unique_key="genre_liked_survey",
+            template_path="survey/genre.html",
+            mandatory=True,
+        )
+
+        try:
+            genre_survey.save()
+        except:
+            pass
+
 
     return app
 

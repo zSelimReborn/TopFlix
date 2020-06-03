@@ -1,13 +1,13 @@
 {% extends "index.html" %}
 {% block app_content %}
     <div class="title-view">
-        <h1 class="name">{{t.name}}</h1>
+        <h1 class="name">{{t.name | safe}}</h1>
         <div class="rating">
             {% include "review/summary.html" %}
         </div>
         <div class="description-wrapper">
             <p class="description">
-                {{t.description}}
+                {{t.description | safe}}
             </p>
         </div>
         <div class="watch-now">
@@ -31,7 +31,7 @@
         </div>
         {% endif %}
         <div class="image-wrapper">
-            <img src="{{t.poster}}" alt="{{t.name}}">
+            <img src="{{t.poster}}" alt="{{t.name | safe}}">
         </div>
 
         <div class="tab-wrapper">

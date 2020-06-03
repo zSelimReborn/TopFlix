@@ -13,6 +13,7 @@ class User(UserMixin, db.Document):
     avatar          = db.StringField()
     titles_liked    = db.ListField(db.ReferenceField('Title'))
     titles_disliked = db.ListField(db.ReferenceField('Title'))
+    genres_liked    = db.ListField(db.ReferenceField('Genre'))
     
     meta = {'collection': 'User'}
 

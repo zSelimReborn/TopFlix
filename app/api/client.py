@@ -93,7 +93,11 @@ class NetflixApi(Api):
         query = {"netflixid": netflix_id}
         response = self._get(self.TITLE_GENRE_SEARCH_ENDPOINT, params=query)
         
-        genres = response.json()["results"]
+        res = response.json()
+        if "results" not in res:
+            return []
+
+        genres = res["results"]
         genres_adapted = []
 
         for genre in genres:

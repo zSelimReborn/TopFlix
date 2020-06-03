@@ -3,7 +3,7 @@
     <ul class="title-list">
         {% for title in titles %}
             <li class="title-item">
-                <p class="name">{{title.name}}</p>
+                <p class="name">{{title.name|safe}}</p>
                 <a href="{{url_for('main.view_title', id=title.id)}}" class="see">Guarda scheda</a>
             </li>
         {% endfor %}

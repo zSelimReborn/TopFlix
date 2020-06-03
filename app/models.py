@@ -12,6 +12,13 @@ class Genre(db.Document):
     meta = {'collection': 'Genre'}
 
     @staticmethod
+    def get_by_id(id):
+        try:
+            return Genre.objects.get(id=id)
+        except:
+            return None
+
+    @staticmethod
     def create_by_adapter(genre):
         genre = Genre(
             netflix_id=genre.get_netflixid(),
