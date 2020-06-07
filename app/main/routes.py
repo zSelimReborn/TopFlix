@@ -34,8 +34,9 @@ def check_survey_mandatory(function):
 @check_survey_mandatory
 def homepage():
     #process_netflix_api()   
-    recommended = Title.recommended_by_genre()
-    return render_template("homepage.html", user=current_user, recommended=recommended)
+    recommended_by_genre = Title.recommended_by_genre()
+    recommended_by_title = Title.recommended_by_title()
+    return render_template("homepage.html", user=current_user, recommended_by_genre=recommended_by_genre, recommended_by_title=recommended_by_title)
 
 @bp.route("/title")
 @check_survey_mandatory

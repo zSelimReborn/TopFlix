@@ -1,3 +1,4 @@
+{% macro recommended_template(recommended_title, recommended) %}
 {% if recommended|length > 0 %}
 <div class="recommended-container">
     <div class="recommended-title-wrapper">
@@ -16,3 +17,4 @@
     </ul>
 </div>
 {% endif %}
+{% endmacro %}

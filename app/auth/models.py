@@ -69,6 +69,20 @@ class User(UserMixin, db.Document):
     
     def genres_liked_as_string(self):
         return '/'.join(str(genre.name) for genre in self.genres_liked)
+    
+    def titles_liked_as_id(self):
+        titles_id = []
+        for title in self.titles_liked:
+            titles_id.append(title.id)
+        
+        return titles_id
+    
+    def titles_disliked_as_id(self):
+        titles_id = []
+        for title in self.titles_disliked:
+            titles_id.append(title.id)
+        
+        return titles_id
 
     @staticmethod
     def register(form):

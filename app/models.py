@@ -8,6 +8,7 @@ from time import time
 from flask_login import current_user
 
 from app.main.models import Review, Discussion
+from app.auth.models import User
 
 class Genre(db.Document):
     netflix_id = db.StringField()
@@ -117,6 +118,16 @@ class Title(db.Document):
         
     def rating_average(self):
         return Review.get_avg_rating(self)
+    
+    @staticmethod
+    def get_genres_by_titles(titles_id):
+        titles = Title.objects.filter(id__in=titles_id).only("genres").as_pymongo()
+        genres_id = {}
+        for title in titles:
+            for genre in title["genres"]:
+                genres_id[genre] = 1
+        
+        return [*genres_id]
 
     @staticmethod
     def recommended_by_genre(limit=8):
@@ -127,10 +138,36 @@ class Title(db.Document):
             return []
         
         genres = current_user.genres_liked
-        titles = Title.objects.filter(genres__in=genres)
+        titles_disliked = current_user.titles_disliked_as_id()
+
+        titles = Title.objects.filter(id__nin=titles_disliked, genres__in=genres)
 
         if len(titles) > limit:
             skip_random = random.randint(0, limit)
             titles = titles.skip(skip_random).limit(limit)
         
+        return titles
+    
+    @staticmethod
+    def recommended_by_title(limit=8):
+        if not current_user.is_authenticated:
+            return []
+        
+        if len(current_user.titles_liked) <= 0:
+            return []
+        
+        # Prendo id titoli piaciuti e non piaciuti dall'utente
+        titles_liked_id = current_user.titles_liked_as_id()
+        titles_disliked_id = current_user.titles_disliked_as_id()
+
+        # Prendo gli id dei generi dei titoli piaciuti all'utente
+        all_genres = Title.get_genres_by_titles(titles_liked_id)
+
+        # Filtro
+        titles = Title.objects.filter(id__nin=titles_liked_id + titles_disliked_id, genres__in=all_genres)
+
+        if len(titles) > limit:
+            skip_random = random.randint(0, limit)
+            titles = titles.skip(skip_random).limit(limit)
+            
         return titles

@@ -1,15 +1,21 @@
 {% extends "index.html" %}
+{% from "title/recommended.html" import recommended_template %}
 <div class="homepage">
     {% block app_content %}
     {% if user.is_authenticated %}
         <h1>Hello - {{user.first_name}} - {{user.email | string}}</h1>
         <p class="genres_liked">{{ user.genres_liked_as_string() }}</p>
+        {% for title in user.titles_liked %}
+            <p>{{ title.name }}</p>
+            <p>{{ title.genres_as_string() }}</p>
+        {% endfor %}
     {% else %}
         <h1>Benvenuto su TOPFlix</h1>
     {% endif %}
         <div class="homepage-content">
-            {% set recommended_title = "Consigliati per te" %}
-            {% include "title/recommended.html" %}
+            {{ recommended_template("Consigliati per te", recommended_by_genre) }}
+
+            {{ recommended_template("In base a ciò che ti piace", recommended_by_title) }}
         </div>
     {% endblock %}
 
