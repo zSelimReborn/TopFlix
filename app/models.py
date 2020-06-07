@@ -1,8 +1,11 @@
+import random
+
 from flask import escape, current_app
 from app import db
 from app.api.adapters import TitleAdapter, GenreAdapter
 from datetime import datetime
 from time import time
+from flask_login import current_user
 
 from app.main.models import Review, Discussion
 
@@ -98,6 +101,9 @@ class Title(db.Document):
         t.save()
         return t
     
+    def genres_as_string(self):
+        return '/'.join(str(genre.name) for genre in self.genres)
+
     def watch_link(self):
         base_url = "https://www.netflix.com/title/{net_id}"
 
@@ -111,3 +117,20 @@ class Title(db.Document):
         
     def rating_average(self):
         return Review.get_avg_rating(self)
+
+    @staticmethod
+    def recommended_by_genre(limit=8):
+        if not current_user.is_authenticated:
+            return []
+        
+        if len(current_user.genres_liked) <= 0:
+            return []
+        
+        genres = current_user.genres_liked
+        titles = Title.objects.filter(genres__in=genres)
+
+        if len(titles) > limit:
+            skip_random = random.randint(0, limit)
+            titles = titles.skip(skip_random).limit(limit)
+        
+        return titles

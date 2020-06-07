@@ -1,4 +1,4 @@
-from app.api.client import NetflixApi
+from app.api.client import NetflixApi, ApiError
 from app.models import Title, Genre
 
 import os
@@ -36,14 +36,20 @@ def process_netflix_api():
         "country_andorunique":"unique",
         "start_year":"1972",
         "orderby":"rating",
-        "limit":"20",
-        "countrylist":"269",
-        "audio":"italian",
+        "limit":"10",
+        #"countrylist":"269",
+        #"audio":"italian",
         "offset": offset,
-        "end_year":"2020"
+        "end_year":"2020",
+        "type": "series"
     }
 
-    titles = api.title_search(params=querystring)
+    try: 
+        titles = api.title_search(params=querystring)
+    except ApiError as e:
+        print(str(e))
+        return False
+
     for title in titles:
         genres = api.genre_by_title(title.get_netflixid())
 
@@ -53,5 +59,5 @@ def process_netflix_api():
             print("GenreID: %s - Name: %s" % (genre.id, genre.name))
     
 
-    write_offset(str(offset + 20))
+    write_offset(str(offset + 10))
 

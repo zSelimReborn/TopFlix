@@ -1,0 +1,18 @@
+{% if recommended|length > 0 %}
+<div class="recommended-container">
+    <div class="recommended-title-wrapper">
+        <h4 class="title">{{ recommended_title }}</h4>
+    </div>
+
+    <ul class="recommended-list">
+        {% for title in recommended %}
+            <li class="recommended-item">
+                <div class="recommended">
+                    <p class="name">{{ title.name }}</p>
+                    <p class="genres">{{ title.genres_as_string() }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

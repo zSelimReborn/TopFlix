@@ -66,6 +66,9 @@ class User(UserMixin, db.Document):
     
     def has_liked_title(self, title):
         return (self.search_titles_liked(title) != None)
+    
+    def genres_liked_as_string(self):
+        return '/'.join(str(genre.name) for genre in self.genres_liked)
 
     @staticmethod
     def register(form):

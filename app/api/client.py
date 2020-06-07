@@ -68,6 +68,8 @@ class NetflixApi(Api):
     
     def title_search(self, **kwargs):
         response = self._get(self.TITLE_SEARCH_ENDPOINT, **kwargs)
+        if "results" not in response.json():
+            raise ApiError(response.json())
         titles = response.json()["results"]
         titles_adapted = []
 

@@ -15,14 +15,13 @@ class SurveyGenreManager(object):
         
         genres_liked = form.genres_liked.data
 
+        user = User.get_by_id(current_user.id)
         for genre_id in genres_liked:
             genre = Genre.get_by_id(genre_id)
             if genre is None:
                 continue
             
-            user = User.get_by_id(current_user.id)
             user.genres_liked.append(genre)
-
 
         survey.users_done.append(user)
         survey.save()

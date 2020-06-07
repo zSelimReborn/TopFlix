@@ -34,13 +34,13 @@ def check_survey_mandatory(function):
 @check_survey_mandatory
 def homepage():
     #process_netflix_api()   
-
-    return render_template("homepage.html", user=current_user)
+    recommended = Title.recommended_by_genre()
+    return render_template("homepage.html", user=current_user, recommended=recommended)
 
 @bp.route("/title")
 @check_survey_mandatory
 def list_title():
-    titles = Title.objects
+    titles = Title.objects()
     return render_template("title/list.html", titles=titles)
 
 @bp.route("/title/<id>")
@@ -59,7 +59,7 @@ def view_title(id):
 
     answer_form = AnswerDiscussionForm(request.values, title_parent_id=str(title.id))
 
-    return render_template("title/view.html", title=title.name, t=title, reviews=reviews, review_form=review_form, discussion_form=discussion_form, answer_form=answer_form)
+    return render_template("title/view.html", title=html.unescape(title.name), t=title, reviews=reviews, review_form=review_form, discussion_form=discussion_form, answer_form=answer_form)
 
 @bp.route("/title/review/add", methods=["POST"])
 @login_required
