@@ -3,66 +3,205 @@
 {% block styles %}
 {{super()}}
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
-      rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<!-- ICONE RESPONSIVE -->
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='images/apple-touch-icon-iphone.png') }}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='images/apple-touch-icon-ipad.png') }}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='images/apple-touch-icon-iphone-retina.png') }}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='images/apple-touch-icon-ipad-retina.png') }}">
+<link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static', filename='images/apple-touch-icon-ipad-pro.png') }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon-iphone-6-plus.png') }}">
+<link rel="icon" sizes="192x192" href="{{ url_for('static', filename='images/icon-hd.png') }}">
+<link rel="icon" sizes="128x128" href="{{ url_for('static', filename='images/icon.png') }}">
+
+<!-- font custom -->
+<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+
+<!-- Css custom -->
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='preloadercss/swiper.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='preloadercss/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='revolution/css/settings.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='revolution/css/layers.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='revolution/css/navigation.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/magnific-popup.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/jquery.mmenu.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/owl.carousel.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/responsive.css')}}">
+
 {% endblock %}
 
 {% block head %}
 {{super()}}
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Meta -->
+<meta name="description" content="TopFlix - Saprai sempre cosa vedere">
+<meta name="keywords" content="movies, series, online streaming, what watch,
+    cinema">
+<meta name="author" content="Alessio Romaniello - Pasquale Giaccio">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>
 <script
-  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-  crossorigin="anonymous"></script>
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="crossorigin="anonymous"></script>
 {% endblock %}
 
 <div class="block-title">
-    {% block title %} {% if title %}{{ title }} - TopFlix{% else %} Benvenuto su TopFlix {% endif %} {% endblock %}
+    {% block title %} {% if title %}{{ title }} - TopFlix{% else %} TopFlix -
+    Saprai sempre cosa vedere {% endif %} {% endblock %}
 </div>
 {% block navbar %}
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            <a class="navbar-brand" href="{{ url_for('main.homepage') }}">TopFlix</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('main.homepage') }}">Home</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url_for('main.list_title') }}">Explore</a></li>
-                {% if current_user.is_anonymous %}
-                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                {% else %}
-                <li><a href="{{ url_for('auth.view_user', id=current_user.id) }}">Profile</a></li>
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</nav>
-{% endblock %} {% block content %}
-<main class="container">
-    <div class="messages">
-        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-        <div class="alert alert-info" role="alert">{{ message }}</div>
-        {% endfor %} {% endif %} {% endwith %}
-    </div>
+<nav id="main-mobile-nav"></nav>
+<div class="wrapper {% block body_class %} {{ body_classes }} {% endblock %} ">
 
-    {% block app_content %}{% endblock %}
-</main>
-{% endblock %} 
-{% block scripts %}
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-{% endblock %}
+    <!-- HEADER -->
+    <header class="header {% block header_class %} {{ header_classes }} {% endblock %}">
+        <div class="container-fluid">
+            <!-- MENU - NAVBAR -->
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="{{ url_for('main.homepage') }}">
+
+                    <img src="{{url_for('static', filename='images/logo.svg')}} " alt="logo" width="150"
+                        class="logo">
+
+                    <img src="{{url_for('static', filename='images/logo-white.svg')}} " alt="white logo"
+                        width="150" class="logo-white">
+                </a>
+                <button id="mobile-nav-toggler" class="hamburger
+                    hamburger--collapse" type="button">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+
+                <div class="navbar-collapse" id="main-nav">
+
+                    <ul class="navbar-nav mx-auto" id="main-menu">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.homepage') }}">Home</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                                data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">Utente</a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="#">Contattaci</a>
+                                </li>
+
+                                {% if current_user.is_anonymous %}
+                                <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Accedi</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrati</a></li>
+                                {% else %}
+                                <li><a class="dropdown-item" href="{{ url_for('auth.view_user',
+                                        id=current_user.id) }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                                data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">Film & SerieTV</a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="{{ url_for('main.list_title') }}">Lista Film</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contattaci</a>
+                        </li>
+                    </ul>
+
+
+                    <ul class="navbar-nav extra-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link toggle-search" href="#">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item m-auto">
+                            <a href="#login-register-popup" class="btn btn-main
+                                btn-effect login-btn popup-with-zoom-anim">
+                                <i class="icon-user"></i>Accedi
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </nav>
+            <!-- FINE MENU NAVBAR -->
+
+        </div>
+    </header>
+    {% endblock %} {% block content %}
+    <main class="main-container">
+        <div class="preloader">
+            <div class="inner">
+                <figure class="logo">
+                    <img src="{{ url_for('static', filename='preloaderlogo/logo-light.png') }}" alt="preloader">
+                </figure>
+                <span class="percentage"></span>
+            </div>
+            <div class="transition-overlay"></div>
+            <!-- end inner -->
+        </div>
+        <div class="messages">
+            {% with messages = get_flashed_messages() %} {% if messages %} {%
+            for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %} {% endif %} {% endwith %}
+        </div>
+
+        {% block app_content %}{% endblock %}
+    </main>
+    </div>
+    {% endblock %}
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.ajaxchimp.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mmenu.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.inview.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.countTo.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/headroom.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/swiper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/jquery.themepunch.tools.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.actions.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.carousel.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.kenburn.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.layeranimation.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.migration.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.navigation.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.parallax.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.video.min.js') }}"></script>
+    {% endblock %}

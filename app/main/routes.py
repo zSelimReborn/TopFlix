@@ -36,7 +36,7 @@ def homepage():
     #process_netflix_api()   
     recommended_by_genre = Title.recommended_by_genre()
     recommended_by_title = Title.recommended_by_title()
-    return render_template("homepage.html", user=current_user, recommended_by_genre=recommended_by_genre, recommended_by_title=recommended_by_title)
+    return render_template("homepage.html", body_classes="homepage", header_classes="header-fixed header-transparent text-white", user=current_user, recommended_by_genre=recommended_by_genre, recommended_by_title=recommended_by_title)
 
 @bp.route("/title")
 @check_survey_mandatory

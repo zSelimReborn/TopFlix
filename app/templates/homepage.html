@@ -2,21 +2,47 @@
 {% from "title/recommended.html" import recommended_template %}
 <div class="homepage">
     {% block app_content %}
-    {% if user.is_authenticated %}
-        <h1>Hello - {{user.first_name}} - {{user.email | string}}</h1>
-        <p class="genres_liked">{{ user.genres_liked_as_string() }}</p>
-        {% for title in user.titles_liked %}
-            <p>{{ title.name }}</p>
-            <p>{{ title.genres_as_string() }}</p>
-        {% endfor %}
-    {% else %}
-        <h1>Benvenuto su TOPFlix</h1>
-    {% endif %}
-        <div class="homepage-content">
-            {{ recommended_template("Consigliati per te", recommended_by_genre) }}
-
-            {{ recommended_template("In base a ciò che ti piace", recommended_by_title) }}
+    <section id="slider" class="full-slider">
+        <div class="rev-slider-wrapper fullscreen-container overlay-gradient">
+            <div id="fullscreen-slider" class="rev_slider fullscreenbanner"
+                style="display:none" data-version="5.4.1">
+                <ul>
+    
+                    <li data-transition="fade">
+    
+                        <img src="{{ url_for('static', filename='images/slider/slider1.jpg') }}" alt="Cosa hai appena visto?"
+                            title="slider-bg" data-bgposition="center center"
+                            data-bgfit="cover" data-bgrepeat="no-repeat"
+                            data-bgparallax="10" class="rev-slidebg"
+                            data-no-retina="">
+    
+                        <div class="tp-caption tp-resizeme" data-x="center"
+                            data-hoffset="" data-y="middle"
+                            data-voffset="['-30','-30','-30','-30']"
+                            data-responsive_offset="on"
+                            data-fontsize="['60','50','40','30']"
+                            data-lineheight="['60','50','40','30']"
+                            data-whitespace="nowrap" data-frames='[{" delay" :1000,"speed" :2000," frame" :" 0" ," from" :"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;"," mask" :" x:0px;y:[100%];s:inherit;e:inherit;" ," to":" o:1;" ," ease" :" Power2.easeInOut" },{" delay" :"wait" ," speed" :500," frame" :" 999" ," to" :"auto:auto;" ," ease" :" Power3.easeInOut" }]'
+                            style="z-index: 5; color: #fff; font-weight: 900;">
+                            <div class="text">
+                                {% if user.is_authenticated %}
+                                    <h1>Bentornato {{user.first_name}}</h1>
+                                {% else %}
+                                    <h1>Benvenuto su TOPFlix</h1>
+                                {% endif %}                            
+                            </div>
+                        </div>
+                    </li>
+    
+                </ul>
+            </div>
         </div>
+    
+    </section>    
+    <div class="homepage-content">
+        {{ recommended_template("Consigliati per te", recommended_by_genre) }}
+        {{ recommended_template("In base a ciò che ti piace", recommended_by_title) }}
+    </div>
     {% endblock %}
 
 </div>

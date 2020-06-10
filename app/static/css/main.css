@@ -74,3 +74,12 @@
     outline: none;
     text-decoration: none;
 }
+
+.homepage #fullscreen-slider .tp-parallax-wrap {
+    visibility: visible !important;
+}
+
+.homepage #fullscreen-slider .text h1 {
+    color: #fff !important;
+    font-size: 50px !important;
+}
