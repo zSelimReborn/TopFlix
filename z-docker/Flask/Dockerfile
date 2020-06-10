@@ -14,4 +14,4 @@ RUN pip install http://github.com/pythonforfacebook/facebook-sdk/tarball/master
 
 COPY . .
 
-CMD [ "uwsgi", "--ini", "app.ini" ]
+CMD [ "uwsgi", "--enable-threads", "--ini", "app.ini" ]

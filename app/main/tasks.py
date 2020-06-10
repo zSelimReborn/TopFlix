@@ -2,6 +2,7 @@ from app.api.client import NetflixApi, ApiError
 from app.models import Title, Genre
 
 import os
+import time
 
 def create_file_not_exists(filename):
     if not os.path.exists(filename):
@@ -27,8 +28,13 @@ def read_offset():
     
     return 0
 
+def hello_cron():
+    print("I'm running on cron %s" % (time.strftime("%A, %d. %B %Y %I:%M:%S %p")))
 
 def process_netflix_api():
+    print("Start importing netflix api...")
+    print("Time: %s" % (time.strftime("%A, %d. %B %Y %I:%M:%S %p")))
+
     api = NetflixApi()
     
     offset = read_offset()
@@ -36,7 +42,7 @@ def process_netflix_api():
         "country_andorunique":"unique",
         "start_year":"1972",
         "orderby":"rating",
-        "limit":"10",
+        "limit":"99",
         #"countrylist":"269",
         #"audio":"italian",
         "offset": offset,
@@ -59,5 +65,5 @@ def process_netflix_api():
             print("GenreID: %s - Name: %s" % (genre.id, genre.name))
     
 
-    write_offset(str(offset + 10))
+    write_offset(str(offset + 80))
 

@@ -9,11 +9,16 @@ from flask_security import Security
 import os
 import babel
 
+''' Import per gestire task in background '''
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
+
 db = MongoEngine()
 login = LoginManager()
 login.login_view = 'auth.login'
 bootstrap = Bootstrap()
 mail = Mail()
+scheduler = BackgroundScheduler()
 
 
 def create_app(config_class=Config):
@@ -29,6 +34,12 @@ def create_app(config_class=Config):
 
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    from app.main.tasks import process_netflix_api
+    scheduler.add_job(func=process_netflix_api, trigger="cron", hour='00', minute='00', second='00')
+
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
 
     @app.before_first_request
     def insert_genre_survey():
