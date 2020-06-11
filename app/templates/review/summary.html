@@ -1,3 +1,10 @@
+{% if t.rating_average()|int != 0 %}
 <div class="review-summary">
-    <p class="summary">{{ "%.1f" | format(t.rating_average()) }}/10</p>
+    <div class="stars">
+        <div class="rating">
+            {{ t.build_rating_stars() | safe }}
+        </div>
+        <span class="summary">{{ "%.1f" | format(t.rating_average()) }}/10</span>
+    </div>
 </div>
+{% endif %}

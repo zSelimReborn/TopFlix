@@ -1,0 +1,56 @@
+{% macro carousel_template(carousel_title, title_list, cta_text, cta_link, extra_classes) %}
+{% if title_list|length > 0 %}
+<section class="title-carousel {{extra_classes}} ptb100">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="title">{{ carousel_title }}</h2>
+            </div>
+            {% if cta_text and cta_link %}
+            <div class="col-md-4 align-self-center text-right">
+                <a href="{{ cta_link }}" class="btn btn-icon btn-main btn-effect">
+                    {{ cta_text }}
+                    <i class="ti-angle-double-right"></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+
+        <div class="owl-carousel {{ extra_classes }}-slider mt20">
+            {% for title_item in title_list %}
+            <div class="item">
+                <div class="movie-box-1">
+                    <div class="poster">
+                        {% set title_image = title_item.title_poster() %}
+                        <img src="{{ title_image }}" alt="{{ title_item.name|safe }}">
+                    </div>
+
+
+                    <div class="buttons">
+                        <a href="{{ title_item.watch_link() }}"
+                            class="play-video">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="movie-details">
+                        <h4 class="movie-title">
+                            <a href="{{ url_for('main.view_title', id=title_item.id|safe) }}">{{ title_item.name|safe }}</a>
+                        </h4>
+                        <span class="released">{{title_item.year}}</span>
+                    </div>
+
+
+                    {% set t = title_item %}
+                    {% include "review/summary.html" %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endmacro %}

@@ -34,9 +34,21 @@ def check_survey_mandatory(function):
 @check_survey_mandatory
 def homepage():
     #process_netflix_api()   
-    recommended_by_genre = Title.recommended_by_genre()
-    recommended_by_title = Title.recommended_by_title()
-    return render_template("homepage.html", body_classes="homepage", header_classes="header-fixed header-transparent text-white", user=current_user, recommended_by_genre=recommended_by_genre, recommended_by_title=recommended_by_title)
+    #recommended_by_genre = Title.recommended_by_genre()
+    #recommended_by_title = Title.recommended_by_title()
+
+    last_movies = Title.get_last_movies()
+    last_series = Title.get_last_series()
+    last_movies_imported = Title.get_last_titles_imported()
+
+    total_films = Title.get_all_movies().count()
+    total_series = Title.get_all_series().count()
+    total_users = User.objects.count()
+
+    return render_template("homepage.html", body_classes="homepage", header_classes="header-fixed header-transparent text-white", 
+        user=current_user,
+        total_films=total_films, total_series=total_series, total_users=total_users,
+        last_movies=last_movies, last_series=last_series, last_movies_imported=last_movies_imported)
 
 @bp.route("/title")
 @check_survey_mandatory

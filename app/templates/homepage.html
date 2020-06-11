@@ -1,5 +1,7 @@
 {% extends "index.html" %}
-{% from "title/recommended.html" import recommended_template %}
+{% from "carousel/general.html" import carousel_template %}
+{% from "carousel/banner.html" import banner_template %}
+
 <div class="homepage">
     {% block app_content %}
     <section id="slider" class="full-slider">
@@ -40,8 +42,12 @@
     
     </section>    
     <div class="homepage-content">
-        {{ recommended_template("Consigliati per te", recommended_by_genre) }}
-        {{ recommended_template("In base a ciò che ti piace", recommended_by_title) }}
+        {{ carousel_template("Ultimi film", last_movies, "Vedi tutti", url_for("main.list_title"), "latest-movies") }}
+        {{ banner_template("Ultimi titoli importati", last_movies_imported) }}
+        {{ carousel_template("Ultime serie TV", last_series, "Vedi tutti", url_for("main.list_title"), "latest-tvshows") }}
+
+        {% include "info/howtouse.html" %}
+        {% include "info/numbers.html" %}
     </div>
     {% endblock %}
 

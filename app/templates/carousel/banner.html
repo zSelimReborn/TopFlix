@@ -1,0 +1,111 @@
+{% macro banner_template(banner_title, title_list) %}
+{% if title_list|length > 0 %}
+<section class="banner-list counter bg-main-gradient ptb50 text-center"
+    data-background="{{ url_for('static', filename='images/posters/movie-collection.jpg') }}"
+    data-color="#3e4555" data-color-opacity="0.95">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 text-center">
+                <h2 class="title text-white">{{ banner_title }}</h2>
+            </div>
+        </div>
+
+
+        <div class="row mt50">
+
+            <div class="col-md-8">
+
+                <div class="movie-box-1 upcoming-featured-item">
+
+                    <div class="poster">
+                        <img
+                            src="{{ title_list[0].title_poster() }}"
+                            alt="{{ title_list[0].name|safe }}">
+                    </div>
+
+
+                    <div class="buttons">
+                        <a href="{{ title_list[0].watch_link() }}" target="_blank"
+                            class="play-video">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="movie-details">
+                        <h4 class="movie-title">
+                            <a href="{{ url_for('main.view_title', id=title_list[0].id|string) }}">{{ title_list[0].name|safe }}</a>
+                        </h4>
+                        <span class="released">Uscito nel: {{ title_list[0].year }}</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="movie-box-1 upcoming-featured-item">
+
+                    <div class="poster">
+                        <img
+                            src="{{ title_list[1].title_poster() }}"
+                            alt="{{ title_list[1].name|safe }}">
+                    </div>
+
+
+                    <div class="buttons">
+                        <a href="{{ title_list[1].watch_link() }}" target="_blank"
+                            class="play-video">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="movie-details">
+                        <h4 class="movie-title">
+                            <a href="{{ url_for('main.view_title', id=title_list[1].id|string) }}">{{ title_list[1].name|safe }}</a>
+                        </h4>
+                        <span class="released">Uscito nel: {{ title_list[1].year }}</span>
+                    </div>
+
+                </div>
+
+
+                <div class="movie-box-1 upcoming-featured-item">
+
+                    <div class="poster">
+                        <img
+                            src="{{ title_list[2].title_poster() }}"
+                            alt="{{ title_list[2].name|safe }}">
+                    </div>
+
+
+                    <div class="buttons">
+                        <a href="{{ title_list[2].watch_link() }}" target="_blank"
+                            class="play-video">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="movie-details">
+                        <h4 class="movie-title">
+                            <a href="{{ url_for('main.view_title', id=title_list[2].id|string) }}">{{ title_list[2].name|safe }}</a>
+                        </h4>
+                        <span class="released">Uscito nel: {{ title_list[2].year }}</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endif %}
+{% endmacro %}

@@ -1,6 +1,6 @@
 import random
 
-from flask import escape, current_app
+from flask import escape, current_app, url_for
 from app import db
 from app.api.adapters import TitleAdapter, GenreAdapter
 from datetime import datetime
@@ -110,6 +110,13 @@ class Title(db.Document):
 
         return base_url.format(net_id=self.netflix_id)
 
+    def title_poster(self):
+        if self.poster is None or self.poster.strip() == "N/A" or self.poster.strip() == "None":
+            return url_for('static', filename='images/movie_default.png')
+
+        return self.poster
+        
+
     def reviews(self):
         return Review.get_by_title(self)
 
@@ -119,6 +126,40 @@ class Title(db.Document):
     def rating_average(self):
         return Review.get_avg_rating(self)
     
+    def rating_average_stars(self):
+        rating_avg = self.rating_average()
+        return (rating_avg * 5) / 10
+    
+    def build_rating_stars(self):
+        rating_avg = self.rating_average_stars()
+        stars_count = 0
+        content_html = ""
+
+        for i in range(0, int(rating_avg)):
+            content_html += "<i class='fa fa-star'></i>"
+            stars_count += 1
+        
+        if int(rating_avg) != rating_avg:
+            content_html += "<i class='fa fa-star-half-o'></i>"
+        
+        for i in range(stars_count, 4):
+            content_html += "<i class='fa fa-star-o'></i>"
+        
+        return content_html
+    
+
+    @staticmethod
+    def get_last_movies(limit=8):
+        return Title.objects.filter(title_type="movie").order_by('-year').limit(limit)
+    
+    @staticmethod
+    def get_last_series(limit=8):
+        return Title.objects.filter(title_type="series").order_by('-year').limit(limit)
+    
+    @staticmethod
+    def get_last_titles_imported(limit=3):
+        return Title.objects.order_by('inserted_at').limit(limit)
+
     @staticmethod
     def get_genres_by_titles(titles_id):
         titles = Title.objects.filter(id__in=titles_id).only("genres").as_pymongo()
@@ -171,3 +212,11 @@ class Title(db.Document):
             titles = titles.skip(skip_random).limit(limit)
             
         return titles
+    
+    @staticmethod
+    def get_all_movies():
+        return Title.objects.filter(title_type="movie")
+    
+    @staticmethod
+    def get_all_series():
+        return Title.objects.filter(title_type="series")
