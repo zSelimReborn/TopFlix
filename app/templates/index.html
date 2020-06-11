@@ -57,19 +57,20 @@
 </div>
 {% block navbar %}
 <nav id="main-mobile-nav"></nav>
-<div class="wrapper {% block body_class %} {{ body_classes }} {% endblock %} ">
-
+<div class="wrapper {% block body_class %} {{ body_classes }} {% endblock %}">
     <!-- HEADER -->
-    <header class="header {% block header_class %} {{ header_classes }} {% endblock %}">
+    <header class="header {% block header_class %} {{ header_classes }} {%
+        endblock %}">
         <div class="container-fluid">
             <!-- MENU - NAVBAR -->
             <nav class="navbar navbar-expand-lg">
                 <a class="navbar-brand" href="{{ url_for('main.homepage') }}">
-
-                    <img src="{{url_for('static', filename='images/logo.svg')}} " alt="logo" width="150"
+                    <img src="{{url_for('static', filename='images/logo.svg')}}"alt="logo"
+                        width="150"
                         class="logo">
 
-                    <img src="{{url_for('static', filename='images/logo-white.svg')}} " alt="white logo"
+                    <img src="{{url_for('static',
+                        filename='images/logo-white.svg')}}"alt="white logo"
                         width="150" class="logo-white">
                 </a>
                 <button id="mobile-nav-toggler" class="hamburger
@@ -84,7 +85,8 @@
                     <ul class="navbar-nav mx-auto" id="main-menu">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('main.homepage') }}">Home</a>
+                            <a class="nav-link" href="{{
+                                url_for('main.homepage') }}">Home</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -99,12 +101,16 @@
                                 </li>
 
                                 {% if current_user.is_anonymous %}
-                                <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">Accedi</a></li>
-                                <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrati</a></li>
+                                <li><a class="dropdown-item" href="{{
+                                        url_for('auth.login') }}">Accedi</a></li>
+                                <li><a class="dropdown-item" href="{{
+                                        url_for('auth.register') }}">Registrati</a></li>
                                 {% else %}
-                                <li><a class="dropdown-item" href="{{ url_for('auth.view_user',
+                                <li><a class="dropdown-item" href="{{
+                                        url_for('auth.view_user',
                                         id=current_user.id) }}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                                <li><a class="dropdown-item" href="{{
+                                        url_for('auth.logout') }}">Logout</a></li>
                                 {% endif %}
                             </ul>
                         </li>
@@ -117,7 +123,8 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item"
-                                        href="{{ url_for('main.list_title') }}">Lista Film</a>
+                                        href="{{ url_for('main.list_title') }}">Lista
+                                        Film</a>
                                 </li>
                             </ul>
                         </li>
@@ -172,36 +179,175 @@
 
         {% block app_content %}{% endblock %}
     </main>
+</div>
+<footer class="footer1 bg-dark">
+
+    <div class="footer-widget-area ptb100">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="widget widget-about">
+
+                        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo"
+                            class="logo">
+
+                        <img src="{{ url_for('static', filename='images/logo-white.svg') }}" alt="white logo"
+                            class="logo-white">
+                        <p class="nomargin">TopFlix è la WebApp che ti aiuta a
+                            scegliere il prossimo film o la serieTV da vedere.</p>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="widget widget-links">
+                        <h4 class="widget-title">Link Utili</h4>
+                        <ul class="general-listing">
+                            <li><a href="#">Su di noi</a></li>
+                            {% if current_user.is_authenticated %}
+                                <li><a href="{{ url_for('auth.view_user', id=current_user.id) }}">Il mio Account</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                                <li><a href="{{ url_for('auth.register') }}">Registrati</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="widget widget-blog">
+                        <h4 class="widget-title">Tutela ed informativa</h4>
+                        <ul class="blog-posts">
+                            <li><a href="https://www.iubenda.com/privacy-policy/89115821">Informativa sui dati raccolti</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="widget widget-social">
+                        <h4 class="widget-title">seguici</h4>
+                        <p>Rimaniamo in contatto.</p>
+
+                        <ul class="social-btns">
+
+                            <li>
+                                <a href="#" class="social-btn-roll facebook">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa
+                                            fa-facebook"></i>
+                                        <i class="social-btn-roll-icon fa
+                                            fa-facebook"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="social-btn-roll twitter">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa
+                                            fa-twitter"></i>
+                                        <i class="social-btn-roll-icon fa
+                                            fa-twitter"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="social-btn-roll google-plus">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa
+                                            fa-google-plus"></i>
+                                        <i class="social-btn-roll-icon fa
+                                            fa-google-plus"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="social-btn-roll instagram">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa
+                                            fa-instagram"></i>
+                                        <i class="social-btn-roll-icon fa
+                                            fa-instagram"></i>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-    {% endblock %}
-    {% block scripts %}
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.ajaxchimp.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.mmenu.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.inview.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.countTo.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/imagesloaded.pkgd.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/headroom.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 
-    <script src="{{ url_for('static', filename='js/swiper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/jquery.themepunch.tools.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
+    <div class="footer-copyright-area ptb30">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex">
+                        <div class="links">
+                        </div>
+                        <div class="copyright ml-auto">All Rights Reserved ©2020
+                            by Alessio Romaniello e Pasquale Giaccio </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.ajaxchimp.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js')
+    }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.mmenu.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.inview.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.countTo.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/isotope.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/headroom.js') }}"></script>
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.actions.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.carousel.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.kenburn.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.layeranimation.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.migration.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.navigation.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.parallax.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='revolution/js/extensions/revolution.extension.video.min.js') }}"></script>
-    {% endblock %}
+<script src="{{ url_for('static', filename='js/swiper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/jquery.themepunch.tools.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.actions.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.carousel.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.kenburn.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.layeranimation.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.migration.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.navigation.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.parallax.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.slideanims.min.js')
+    }}"></script>
+<script type="text/javascript" src="{{ url_for('static',
+    filename='revolution/js/extensions/revolution.extension.video.min.js') }}"></script>
+{% endblock %}
