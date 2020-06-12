@@ -62,7 +62,7 @@ def homepage():
 @check_survey_mandatory
 def list_title():
     titles = Title.objects()
-    return render_template("title/list.html", titles=titles)
+    return render_template("title/list.html", titles=titles, header_classes="header-fixed header-transparent text-white")
 
 @bp.route("/title/<id>")
 @check_survey_mandatory

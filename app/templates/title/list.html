@@ -1,11 +1,113 @@
 {% extends "index.html" %}
 {% block app_content %}
-    <ul class="title-list">
-        {% for title in titles %}
-            <li class="title-item">
-                <p class="name">{{title.name|safe}}</p>
-                <a href="{{url_for('main.view_title', id=title.id)}}" class="see">Guarda scheda</a>
-            </li>
-        {% endfor %}
-    </ul>
+<section class="page-header overlay-gradient" style="background: url({{ url_for('static', filename='images/posters/movie-collection.jpg') }});">
+    <div class="container">
+        <div class="inner">
+            <h2 class="title">Lista Titoli</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('main.homepage') }}">Home</a></li>
+                <li>Lista Titoli</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+
+<div class="ptb100">
+    <div class="container">
+
+        <div class="row mb100">
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+
+                <div class="sort-by">
+                    <div class="sort-by-select">
+                        <select class="chosen-select-no-single">
+                            <option value="">Ordine Predefinito</option>
+                            <option value="name">Nome</option>
+                            <option value="year">Anno</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            {% for title in titles %}
+                <div class="col-md-12 col-sm-12">
+                    <div class="movie-list-2">
+                        <div class="listing-container">
+                            <div class="listing-image">
+                                <div class="img-wrapper">
+                                    <div class="play-btn">
+                                        <a target="_blank"
+                                            href="{{ title.watch_link() }}"
+                                            class="play-video">
+                                            <i class="fa fa-play"></i>
+                                        </a>
+                                    </div>
+                                    <img src="{{ title.title_poster() }}"
+                                        alt="{{ title.name|safe }}">
+                                </div>
+                            </div>
+
+                            <div class="listing-content">
+                                <div class="inner">
+                                    <h4 class="title">{{ title.name|safe }}</h4>
+                                    <p>{{ title.description|safe }}</p>
+                                    <a href="{{ title.detail_link() }}" class="btn btn-main
+                                        btn-effect">Scheda Film</a>
+                                </div>
+
+                                <div class="buttons">
+                                    <a href="{{ title.detail_link() }}" data-original-title="Share"
+                                        data-toggle="tooltip"
+                                        class="share-link"
+                                        data-placement="bottom">
+                                        <i class="icon-share"></i>
+                                        <input type="text" class="title-link-input" name="title_link_{{ title.id|string }}" id="title_link_{{ title.id|string }}" value="{{ title.detail_link() }}" >
+                                    </a>
+                                </div>
+
+                                {% set t = title %}
+                                {% include "review/summary.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <nav class="pagination">
+                    <ul>
+                        <li><a href="#" class="current-page">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#"><i class="ti-angle-right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $(".share-link").on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let copyText = e.target.parentNode.querySelector("input.title-link-input");
+
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+            document.execCommand("copy");
+        });
+    });
+</script>
 {% endblock %}

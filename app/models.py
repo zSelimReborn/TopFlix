@@ -116,6 +116,8 @@ class Title(db.Document):
 
         return self.poster
         
+    def detail_link(self):
+        return url_for("main.view_title", id=self.id, _external=True)
 
     def reviews(self):
         return Review.get_by_title(self)
