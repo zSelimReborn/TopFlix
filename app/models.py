@@ -149,6 +149,13 @@ class Title(db.Document):
     
 
     @staticmethod
+    def get_random_collection(limit=8):
+        total_count = Title.objects.count()
+        skip = random.randint(0, total_count)
+
+        return Title.objects.skip(skip).limit(limit)
+
+    @staticmethod
     def get_last_movies(limit=8):
         return Title.objects.filter(title_type="movie").order_by('-year').limit(limit)
     

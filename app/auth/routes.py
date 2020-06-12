@@ -1,5 +1,5 @@
 from app.auth import bp
-from flask import current_app, request, escape, render_template, redirect, flash, url_for, jsonify
+from flask import current_app, request, escape, render_template, redirect, flash, url_for, jsonify, g
 from app.auth.forms import LoginForm, RegisterForm, EditProfileForm, RequestPasswordForm, ResetPasswordForm
 from app.auth.models import User
 from flask_login import current_user, login_user, logout_user, login_required
@@ -7,6 +7,12 @@ from app.auth.email import send_request_password_email
 from app.auth.oauth import FacebookLogin
 
 import json
+
+@bp.before_request
+def inject_user_forms():
+    g.login_form = LoginForm()
+    g.register_form = RegisterForm()
+    g.reset_form = RequestPasswordForm()
 
 @bp.route("/fb")
 def fb_login():

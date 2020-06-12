@@ -2,38 +2,62 @@
 
 {% block styles %}
 {{super()}}
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet"
+    href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+    rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
 
 
 <!-- ICONE RESPONSIVE -->
-<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/x-icon">
-<link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='images/apple-touch-icon-iphone.png') }}">
-<link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='images/apple-touch-icon-ipad.png') }}">
-<link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='images/apple-touch-icon-iphone-retina.png') }}">
-<link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='images/apple-touch-icon-ipad-retina.png') }}">
-<link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static', filename='images/apple-touch-icon-ipad-pro.png') }}">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon-iphone-6-plus.png') }}">
-<link rel="icon" sizes="192x192" href="{{ url_for('static', filename='images/icon-hd.png') }}">
-<link rel="icon" sizes="128x128" href="{{ url_for('static', filename='images/icon.png') }}">
+<link rel="shortcut icon" href="{{ url_for('static',
+    filename='images/favicon.png') }}" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static',
+    filename='images/apple-touch-icon-iphone.png') }}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static',
+    filename='images/apple-touch-icon-ipad.png') }}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static',
+    filename='images/apple-touch-icon-iphone-retina.png') }}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static',
+    filename='images/apple-touch-icon-ipad-retina.png') }}">
+<link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static',
+    filename='images/apple-touch-icon-ipad-pro.png') }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static',
+    filename='images/apple-touch-icon-iphone-6-plus.png') }}">
+<link rel="icon" sizes="192x192" href="{{ url_for('static',
+    filename='images/icon-hd.png') }}">
+<link rel="icon" sizes="128x128" href="{{ url_for('static',
+    filename='images/icon.png') }}">
 
 <!-- font custom -->
-<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700"
+    rel="stylesheet">
 
 <!-- Css custom -->
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
-<link rel="stylesheet" href="{{url_for('static', filename='preloadercss/swiper.min.css')}}">
-<link rel="stylesheet" href="{{url_for('static', filename='preloadercss/style.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='revolution/css/settings.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='revolution/css/layers.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='revolution/css/navigation.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/magnific-popup.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/jquery.mmenu.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/owl.carousel.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/responsive.css')}}">
+<link rel="stylesheet" href="{{url_for('static',
+    filename='preloadercss/swiper.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',
+    filename='preloadercss/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='revolution/css/settings.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='revolution/css/layers.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='revolution/css/navigation.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='css/magnific-popup.css')}}">
+<link rel="stylesheet" type="text/css"
+    href="{{url_for('static',filename='css/jquery.mmenu.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='css/owl.carousel.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',
+    filename='css/responsive.css')}}">
 
 {% endblock %}
 
@@ -65,12 +89,13 @@
             <!-- MENU - NAVBAR -->
             <nav class="navbar navbar-expand-lg">
                 <a class="navbar-brand" href="{{ url_for('main.homepage') }}">
-                    <img src="{{url_for('static', filename='images/logo.svg')}}"alt="logo"
+                    <img src="{{url_for('static', filename='images/logo.svg')}}"
+                        alt="logo"
                         width="150"
                         class="logo">
 
                     <img src="{{url_for('static',
-                        filename='images/logo-white.svg')}}"alt="white logo"
+                        filename='images/logo-white.svg')}}" alt="white logo"
                         width="150" class="logo-white">
                 </a>
                 <button id="mobile-nav-toggler" class="hamburger
@@ -107,9 +132,6 @@
                                         url_for('auth.register') }}">Registrati</a></li>
                                 {% else %}
                                 <li><a class="dropdown-item" href="{{
-                                        url_for('auth.view_user',
-                                        id=current_user.id) }}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{{
                                         url_for('auth.logout') }}">Logout</a></li>
                                 {% endif %}
                             </ul>
@@ -134,15 +156,8 @@
                         </li>
                     </ul>
 
-
+                    {% if not current_user.is_authenticated %}
                     <ul class="navbar-nav extra-nav">
-
-                        <li class="nav-item">
-                            <a class="nav-link toggle-search" href="#">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-
                         <li class="nav-item m-auto">
                             <a href="#login-register-popup" class="btn btn-main
                                 btn-effect login-btn popup-with-zoom-anim">
@@ -150,6 +165,7 @@
                             </a>
                         </li>
                     </ul>
+                    {% endif %}
 
                 </div>
 
@@ -163,7 +179,9 @@
         <div class="preloader">
             <div class="inner">
                 <figure class="logo">
-                    <img src="{{ url_for('static', filename='preloaderlogo/logo-light.png') }}" alt="preloader">
+                    <img src="{{ url_for('static',
+                        filename='preloaderlogo/logo-light.png') }}"
+                        alt="preloader">
                 </figure>
                 <span class="percentage"></span>
             </div>
@@ -189,10 +207,13 @@
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <div class="widget widget-about">
 
-                        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo"
+                        <img src="{{ url_for('static',
+                            filename='images/logo.svg') }}" alt="logo"
                             class="logo">
 
-                        <img src="{{ url_for('static', filename='images/logo-white.svg') }}" alt="white logo"
+                        <img src="{{ url_for('static',
+                            filename='images/logo-white.svg') }}" alt="white
+                            logo"
                             class="logo-white">
                         <p class="nomargin">TopFlix è la WebApp che ti aiuta a
                             scegliere il prossimo film o la serieTV da vedere.</p>
@@ -206,10 +227,11 @@
                         <ul class="general-listing">
                             <li><a href="#">Su di noi</a></li>
                             {% if current_user.is_authenticated %}
-                                <li><a href="{{ url_for('auth.view_user', id=current_user.id) }}">Il mio Account</a></li>
+                            <li><a href="{{ url_for('auth.view_user',
+                                    id=current_user.id) }}">Il mio Account</a></li>
                             {% else %}
-                                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                                <li><a href="{{ url_for('auth.register') }}">Registrati</a></li>
+                            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                            <li><a href="{{ url_for('auth.register') }}">Registrati</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -220,7 +242,9 @@
                     <div class="widget widget-blog">
                         <h4 class="widget-title">Tutela ed informativa</h4>
                         <ul class="blog-posts">
-                            <li><a href="https://www.iubenda.com/privacy-policy/89115821">Informativa sui dati raccolti</a></li>
+                            <li><a
+                                    href="https://www.iubenda.com/privacy-policy/89115821">Informativa
+                                    sui dati raccolti</a></li>
                         </ul>
                     </div>
                 </div>
@@ -304,13 +328,22 @@
 <div id="backtotop">
     <a href="#"></a>
 </div>
+
+{% if not current_user.is_authenticated %}
+<div id="login-register-popup" class="small-dialog zoom-anim-dialog mfp-hide">
+    {% set login_form = g.login_form %}
+    {% set register_form = g.register_form %}
+    {% set reset_form = g.reset_form %}
+    {% include "auth/user/_complete_form.html" %}
+</div>
+{% endif %}
+
 {% endblock %}
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.ajaxchimp.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js')
-    }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{ url_for('static', filename='js/jquery.mmenu.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.inview.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.countTo.min.js') }}"></script>

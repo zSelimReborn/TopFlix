@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import request, escape, render_template, redirect, flash, url_for, jsonify, current_app
+from flask import request, escape, render_template, redirect, flash, url_for, jsonify, current_app, g
 from app.main import bp 
 from flask_login import current_user, login_required
 
@@ -14,6 +14,7 @@ from app.models import *
 from app.main.tasks import process_netflix_api
 from app.main.models import Review, Survey
 from app.main.forms import AddReviewForm, EditReviewForm, AddDiscussionForm, EditDiscussionForm, AnswerDiscussionForm, EditAnswerDiscussionForm
+from app.auth.forms import LoginForm, RegisterForm, RequestPasswordForm 
 
 from .survey import SurveySwitchForm
 
@@ -29,6 +30,13 @@ def check_survey_mandatory(function):
 
         return function(**kwargs)
     return wrapper
+
+@bp.before_request
+def inject_user_forms():
+    g.login_form = LoginForm()
+    g.register_form = RegisterForm()
+    g.reset_form = RequestPasswordForm()
+
 
 @bp.route("/")
 @check_survey_mandatory
@@ -378,9 +386,10 @@ def show_survey(unique_key):
     return render_template(survey.template_path, form=form)
 
 
-@bp.errorhandler(404)
+@bp.app_errorhandler(404)
 def handle_notfound(e):
-    return "Non trovato"
+    title_collection = Title.get_random_collection()
+    return render_template("errors/404.html", title="Pagina non trovata", title_collection=title_collection), 404
 
 @bp.errorhandler(403)
 def handle_exception(e):

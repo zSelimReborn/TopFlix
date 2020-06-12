@@ -27,8 +27,8 @@
                             data-whitespace="nowrap" data-frames='[{" delay" :1000,"speed" :2000," frame" :" 0" ," from" :"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;"," mask" :" x:0px;y:[100%];s:inherit;e:inherit;" ," to":" o:1;" ," ease" :" Power2.easeInOut" },{" delay" :"wait" ," speed" :500," frame" :" 999" ," to" :"auto:auto;" ," ease" :" Power3.easeInOut" }]'
                             style="z-index: 5; color: #fff; font-weight: 900;">
                             <div class="text">
-                                {% if user.is_authenticated %}
-                                    <h1>Bentornato {{user.first_name}}</h1>
+                                {% if current_user.is_authenticated %}
+                                    <h1>Bentornato {{current_user.first_name}}</h1>
                                 {% else %}
                                     <h1>Benvenuto su TOPFlix</h1>
                                 {% endif %}                            

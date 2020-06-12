@@ -167,6 +167,59 @@ header.header-fixed {
     z-index: 1000 !important;
 }
 
+.page-not-found-container .title-carousel .title {
+    font-size: 34px;
+    color: #3e4555;
+    opacity: 1;
+    font-weight: 600;
+    text-shadow: none;
+    margin: 0 !important;
+    line-height: 1.5;
+    text-align: left;
+    padding-bottom: 20px;
+}
+
+.header nav.navbar {
+    min-height: auto !important;
+}
+
+header.header .navbar-nav .nav-item .btn.btn-main {
+    padding: 0 15px;
+}
+
+.my-mfp-zoom-in .mfp-content .login-register-page {
+    background: none !important;
+    height: auto !important;
+    z-index: 10;
+
+}
+
+.my-mfp-zoom-in .mfp-content .login-register-page::before {
+    background-color: transparent !important;
+}
+
+.my-mfp-zoom-in .mfp-content .login-register-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 500px;
+}
+
+.my-mfp-zoom-in .mfp-content #login-register-popup {
+    width: 500px;
+    height: 340px;
+}
+
+.my-mfp-zoom-in .mfp-close {
+    display: none;
+}
+
+.my-mfp-zoom-in .mfp-content .login-register-page .back-home {
+    display: none;
+}
+
 @media screen and (min-width: 768px) {
     .banner-list .col-md-8 .movie-box-1 .poster {
         max-height: 450px;
