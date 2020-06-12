@@ -1,18 +1,128 @@
 {% extends "index.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
-<div class="login-page">
-    {% block app_content %}
-    <h1>Login</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
+{% block app_content %}
+<div class="wrapper">
+    <div class="login-page login-register-page" style="background-image: url({{url_for('static', filename='images/posters/movie-collection.jpg')}})">
+        <div class="container">
+            <div class="small-dialog login-register">
+                <div class="signin-wrapper">
+                    <div class="small-dialog-headline">
+                        <h4 class="text-center">Accedi</h4>
+                    </div>
+                    <div class="small-dialog-content">
+                        <form id="topflix_login" action="{{login_form.get_action()}}" role="form" method="POST" class="form" >
+                            {{ login_form.hidden_tag() }} 
+                            {{ wtf.form_errors(login_form, hiddens="only") }}
+                            
+                            <div class="form-group required">
+                                <label for="login_username" class="control-label">E-Mail</label>
+                                {{ login_form.email(class="form-control", id="login_username", required="required", placeholder="La tua E-Mail") }}
+                            </div>
+
+                            <div class="form-group required">
+                                <label for="login_password" class="control-label">Password</label>
+                                {{ login_form.password(class="form-control", id="login_password", required="required", placeholder="La tua Password") }}
+                            </div>
+
+                            <div class="form-group">
+                                <div class="checkbox pad-bottom-10">
+                                    {{ login_form.remember_me(class="form-control", id="login_remember") }}
+                                    <label for="login_remember" class="control-label">Resta collegato</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {{ login_form.submit(class="btn btn-main btn-effect nomargin", id="login_submit") }}
+                            </div>
+                        </form>
+                        <div class="bottom-links">
+                            <span>Non sei registrato?<a class="signUpClick">Registrati</a></span>
+                            <a class="forgetPasswordClick">Password Dimenticata?</a>
+                            <div class="social-container">
+                                {% include "auth/user/social_login.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="signup-wrapper">
+                    <div class="small-dialog-headline">
+                        <h4 class="text-center">Registrati</h4>
+                    </div>
+                    <div class="small-dialog-content">
+                        <!-- Form -->
+                        <form id="topflix_registration" action="{{register_form.get_action()}}" role="form" method="POST" class="form" >
+                            {{ register_form.hidden_tag() }} 
+                            {{ wtf.form_errors(register_form, hiddens="only") }}
+                            
+                            <div class="form-group required">
+                                <label for="register_firstname" class="control-label">Nome</label>
+                                {{ register_form.first_name(class="form-control", id="register_firstname", required="required", placeholder="La tua E-Mail") }}
+                            </div>
+
+                            <div class="form-group required">
+                                <label for="register_lastname" class="control-label">Cognome</label>
+                                {{ register_form.last_name(class="form-control", id="register_lastname", required="required", placeholder="La tua E-Mail") }}
+                            </div>
+
+                            <div class="form-group required">
+                                <label for="register_email" class="control-label">E-Mail</label>
+                                {{ register_form.email(class="form-control", id="register_email", required="required", placeholder="La tua E-Mail") }}
+                            </div>
+
+                            <div class="form-group required">
+                                <label for="register_password" class="control-label">Password</label>
+                                {{ register_form.password(class="form-control", id="register_password", required="required", placeholder="La tua Password") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ register_form.submit(class="btn btn-main btn-effect nomargin", id="register_submit") }}
+                            </div>
+                        </form>
+                        <div class="bottom-links">
+                            <span>
+                                Hai già un account? <a class="signInClick">Accedi</a>
+                            </span>
+                            <a class="forgetPasswordClick">Password Dimenticata?</a>
+                            <div class="social-container">
+                                {% include "auth/user/social_login.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forgetpassword-wrapper">
+                    <div class="small-dialog-headline">
+                        <h4 class="text-center">Password dimenticata?</h4>
+                    </div>
+                    <div class="small-dialog-content">
+                        <!-- Form -->
+                        <form id="forget_pass_form" action="{{reset_form.get_action()}}" role="form" method="POST" class="form" >
+                            {{ reset_form.hidden_tag() }} 
+                            {{ wtf.form_errors(reset_form, hiddens="only") }}
+
+                            <div class="form-group required">
+                                <label for="request_email" class="control-label">E-Mail</label>
+                                {{ reset_form.email(class="form-control", id="request_email", required="required", placeholder="La tua E-Mail") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ reset_form.submit(class="btn btn-main btn-effect nomargin", id="request_submit") }}
+                            </div>
+                        </form>
+                        <div class="bottom-links">
+                            <a class="cancelClick">Torna indietro</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="{{ url_for('main.homepage') }}" class="text-white">Torna alla Home</a>
         </div>
     </div>
-
-    <a href="{{ url_for('auth.reset_password_request') }}" class="forgot-password">Forgot Password ?</a>
-
-    <div class="social-container">
-        {% include "auth/user/social_login.html" %}
-    </div>
-    {% endblock %}
 </div>
+
+<!-- <a href="{{ url_for('auth.reset_password_request') }}"
+    class="forgot-password">Forgot Password ?</a> -->
+
+{% endblock %}

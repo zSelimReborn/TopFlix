@@ -50,7 +50,9 @@ def login():
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('main.homepage'))
 
-    return render_template('auth/user/login.html', title="Login", form=form)
+    register_form = RegisterForm()
+    reset_form = RequestPasswordForm()
+    return render_template('auth/user/login.html', title="Login", login_form=form, register_form=register_form, reset_form=reset_form)
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
@@ -65,7 +67,9 @@ def register():
             
             login_user(nUser)
             return redirect(url_for('main.homepage'))
-        return render_template('auth/user/register.html', title="Register", form=form)
+        
+        return redirect(url_for("auth.login"))
+        #return render_template('auth/user/register.html', title="Register", form=form)
     except Exception as e:
         flash("Errore: " + str(e))
         return redirect(url_for("auth.login"))
@@ -86,22 +90,6 @@ def view_user(id):
 
     return render_template("auth/user/view.html", user=user)
 
-@bp.route("/user/edit", methods=['GET', 'POST'])
-@login_required
-def edit_user():
-    form = EditProfileForm()
-    if form.validate_on_submit():
-        current_user.email = form.email.data
-        current_user.about_me = form.about_me.data
-        current_user.save()
-        flash("Information saved correctly")
-        return redirect(url_for("auth.view_user", username=current_user.username))
-    elif request.method == 'GET':
-        form.email.data = current_user.email if current_user.email else ''
-        form.about_me.data = current_user.about_me if current_user.about_me else ''
-        
-    return render_template("auth/user/edit.html", title="Edit Profile", form=form)
-
 @bp.route("/user/reset_password_request", methods=["GET", "POST"])
 def reset_password_request():
     if current_user.is_authenticated:
@@ -113,7 +101,9 @@ def reset_password_request():
             send_request_password_email(user)
         flash('Check your email for the instructions to reset your password')
         return redirect(url_for("auth.login"))
-    return render_template("auth/user/reset_password_request.html", title="Reset Password", form=form)
+
+    return redirect(url_for("auth.login"))
+    #return render_template("auth/user/reset_password_request.html", title="Reset Password", form=form)
 
 @bp.route("/user/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):

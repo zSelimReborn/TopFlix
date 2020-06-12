@@ -38,16 +38,18 @@ def process_netflix_api():
     api = NetflixApi()
     
     offset = read_offset()
+    limit = 99
+
     querystring = {
         "country_andorunique":"unique",
         "start_year":"1972",
         "orderby":"rating",
-        "limit":"99",
+        "limit": limit,
         #"countrylist":"269",
         #"audio":"italian",
         "offset": offset,
         "end_year":"2020",
-        "type": "series"
+        #"type": "series"
     }
 
     try: 
@@ -65,5 +67,5 @@ def process_netflix_api():
             print("GenreID: %s - Name: %s" % (genre.id, genre.name))
     
 
-    write_offset(str(offset + 80))
+    write_offset(str(offset + limit))
 
