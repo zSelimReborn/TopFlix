@@ -7,7 +7,7 @@ def send_request_password_email(user):
     send_email('Reset Your Password',
                sender=current_app.config['ADMINS'][0],
                recipients=[user.email],
-               text_body=render_template('email/reset_password.txt',
+               text_body=render_template('auth/email/reset_password.txt',
                                          user=user, token=token),
-               html_body=render_template('email/reset_password.html',
+               html_body=render_template('auth/email/reset_password.html',
                                          user=user, token=token))

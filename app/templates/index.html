@@ -122,7 +122,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item"
-                                        href="#">Contattaci</a>
+                                        href="{{ url_for('contact.new_contact') }}">Contattaci</a>
                                 </li>
 
                                 {% if current_user.is_anonymous %}
@@ -152,7 +152,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contattaci</a>
+                            <a class="nav-link" href="{{ url_for('contact.new_contact') }}">Contattaci</a>
                         </li>
                     </ul>
 

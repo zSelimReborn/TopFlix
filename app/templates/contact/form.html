@@ -1,0 +1,30 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+<div class="contact-form">
+    <h3 class="title">Modulo di Contatto</h3>
+    <form id="contact_form" action="" role="form" method="POST" class="form" >
+        <div id="contact-result"></div>
+        {{ form.hidden_tag() }} 
+        {{ wtf.form_errors(form, hiddens="only") }}
+
+        <div class="form-group required">
+            {{ form.fullname(class="form-control input-box", id="contact_fullname", required="required", placeholder="Il tuo nome") }}
+        </div>
+
+        <div class="form-group required">
+            {{ form.email(class="form-control input-box", id="contact_email", required="required", placeholder="La tua Mail") }}
+        </div>
+
+        <div class="form-group required">
+            {{ form.subject(class="form-control input-box", id="contact_subject", required="required", placeholder="Oggetto") }}
+        </div>
+
+        <div class="form-group required">
+            {{ form.message(class="form-control textarea-box", id="contact_message", required="required", placeholder="Messaggio...") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-main btn-effect", id="contact_submit") }}
+        </div>
+    </form>
+
+</div>

@@ -21,6 +21,13 @@ services:
             - FB_APP_ID=${FACEBOOK_APP_ID}
             - FB_SECRET_KEY=${FACEBOOK_SECRET_KEY}
             - OAUTHLIB_INSECURE_TRANSPORT=${INSECURE_TRANSPORT}
+            - MAIL_SERVER=${MAIL_SERVER}
+            - MAIL_PORT=${MAIL_PORT}
+            - MAIL_USE_TLS=${MAIL_USE_TLS}
+            - MAIL_USE_SSL=${MAIL_USE_SSL}
+            - MAIL_USERNAME=${MAIL_USERNAME}
+            - MAIL_PASSWORD=${MAIL_PASSWORD}
+            - MAIL_ADMIN=${MAIL_ADMIN}
     nginx:
         image: webapp-nginx
         build:

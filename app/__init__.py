@@ -25,6 +25,7 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    mail.init_app(app)
     db.init_app(app)
     login.init_app(app)
     bootstrap.init_app(app)
@@ -34,6 +35,9 @@ def create_app(config_class=Config):
 
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    from app.contact import bp as contact_bp
+    app.register_blueprint(contact_bp, url_prefix='/contact')
 
     from app.main.tasks import process_netflix_api
     scheduler.add_job(func=process_netflix_api, trigger="cron", hour='00', minute='00', second='00')

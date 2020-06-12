@@ -1,0 +1,50 @@
+{% extends "index.html" %}
+{% block app_content %}
+<div class="contact-page">
+    <section class="page-header overlay-gradient" style="background: url({{ url_for('static', filename='images/posters/movie-collection.jpg') }});">
+        <div class="container">
+            <div class="inner">
+                <h2 class="title">Contattaci</h2>
+                <ol class="breadcrumb">
+                    <li><a href="{{ url_for('main.homepage') }}">Home</a></li>
+                    <li>Contattaci</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+
+    <main class="contact-page ptb100">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 col-sm-12">
+                    <h3 class="title">Info</h3>
+                    <div class="details-wrapper">
+                        <p>Contattaci per qualunque dubbio sulla nostra WebApp,
+                            oppure se dovesse esserci qualcosa di sbagliato!</p>
+                        <ul class="contact-details">
+                            <li>
+                                <i class="icon-globe"></i>
+                                <strong>Web:</strong>
+                                <span><a href="{{ url_for('main.homepage') }}">www.topflix.com</a></span>
+                            </li>
+                            <li>
+                                <i class="icon-paper-plane"></i>
+                                <strong>E-Mail:</strong>
+                                <span><a href="mailto: topflix@europe.com"><span class="__cf_email__">topflix@europe.com</span></a></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-md-8 col-sm-12">
+                    {% include "contact/form.html" %}
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock%}
