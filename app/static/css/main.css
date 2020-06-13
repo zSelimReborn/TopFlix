@@ -228,6 +228,10 @@ header.header .navbar-nav .nav-item .btn.btn-main {
     display: none;
 }
 
+.list-title-container .listing-container .stars .summary {
+    display: none;
+}
+
 @media screen and (min-width: 768px) {
     .banner-list .col-md-8 .movie-box-1 .poster {
         max-height: 450px;

@@ -61,8 +61,29 @@ def homepage():
 @bp.route("/title")
 @check_survey_mandatory
 def list_title():
+    limit_title = 8
+
     titles = Title.objects()
-    return render_template("title/list.html", titles=titles, header_classes="header-fixed header-transparent text-white")
+    order_by = request.args.get("order_by")
+    if order_by is not None:
+        titles = titles.order_by(order_by)
+
+    page = request.args.get("page")
+
+    page_int = int(page or 1)
+    page_int = 1 if page_int <= 0 else page_int
+
+    to_skip = (page_int - 1) * limit_title
+    titles = titles.skip(to_skip).limit(limit_title)
+
+    pages = []
+    if page_int > 1:
+        pages.append(page_int - 1)
+
+    pages.extend([page_int, page_int + 1, page_int + 2])
+    last_page = pages[len(pages) - 1]
+
+    return render_template("title/list.html", titles=titles, header_classes="header-fixed header-transparent text-white", current_order_by=order_by, current_page=page_int, last_page=last_page, pages=pages)
 
 @bp.route("/title/<id>")
 @check_survey_mandatory

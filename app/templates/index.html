@@ -386,4 +386,12 @@
     }}"></script>
 <script type="text/javascript" src="{{ url_for('static',
     filename='revolution/js/extensions/revolution.extension.video.min.js') }}"></script>
+<script type="text/javascript">
+    $(function() {
+        // Gestore immagini in errore
+        $('img').on("error", function() {
+            $(this).attr('src', '{{ url_for("static", filename="images/movie_default.png", _external=True) }}');
+        });
+    });
+</script>
 {% endblock %}

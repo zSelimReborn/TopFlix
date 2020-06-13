@@ -13,7 +13,7 @@
 </section>
 
 
-<div class="ptb100">
+<div class="ptb100 list-title-container">
     <div class="container">
 
         <div class="row mb100">
@@ -22,10 +22,10 @@
 
                 <div class="sort-by">
                     <div class="sort-by-select">
-                        <select class="chosen-select-no-single">
-                            <option value="">Ordine Predefinito</option>
-                            <option value="name">Nome</option>
-                            <option value="year">Anno</option>
+                        <select class="chosen-select-no-single sorty-by-select">
+                            <option value="{{ url_for(request.endpoint, page=current_page, _external=True) }}">Ordine Predefinito</option>
+                            <option value="{{ url_for(request.endpoint, page=current_page, order_by='name', _external=True) }}" {{ "selected" if current_order_by == 'name' else "" }}>Nome</option>
+                            <option value="{{ url_for(request.endpoint, page=current_page, order_by='year', _external=True) }}" {{ "selected" if current_order_by == 'year' else "" }}>Anno</option>
                         </select>
                     </div>
                 </div>
@@ -83,10 +83,20 @@
             <div class="col-md-12 col-sm-12">
                 <nav class="pagination">
                     <ul>
-                        <li><a href="#" class="current-page">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#"><i class="ti-angle-right"></i></a></li>
+                        {% for page in pages %}
+                            {% set current_class = "current-page" if page == current_page else "" %}
+                            {% set previous_class = "ti-angle-left" if page < current_page else "" %}
+                            {% set page_url = url_for(request.endpoint, page=page, order_by=current_order_by) %}
+                            <li>
+                                <a href="{{ page_url }}" class="{{ current_class }} {{ previous_class }}">
+                                    {% if previous_class == "" %}
+                                        {{page}}
+                                    {% endif %}
+                                </a>
+                            </li>
+                        {% endfor %}
+
+                        <li><a href="{{ url_for(request.endpoint, page=last_page, order_by=current_order_by) }}"><i class="ti-angle-right"></i></a></li>
                     </ul>
                 </nav>
             </div>
@@ -107,6 +117,10 @@
             copyText.setSelectionRange(0, 99999); /*For mobile devices*/
 
             document.execCommand("copy");
+        });
+
+        $(".list-title-container .sort-by .sorty-by-select").on('change', function(e) {
+            window.location = this.value;
         });
     });
 </script>

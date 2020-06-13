@@ -141,10 +141,12 @@ class Title(db.Document):
             content_html += "<i class='fa fa-star'></i>"
             stars_count += 1
         
+        limit_stars = 5
         if int(rating_avg) != rating_avg:
             content_html += "<i class='fa fa-star-half-o'></i>"
+            limit_stars = 4
         
-        for i in range(stars_count, 4):
+        for i in range(stars_count, limit_stars):
             content_html += "<i class='fa fa-star-o'></i>"
         
         return content_html
