@@ -12,10 +12,14 @@
             <label for="review_content" class="control-label">Recensione</label>
             {{ review_form.content(class="form-control", id="review_content", required="required", placeholder="Contenuto recensione") }}
         </div>
-        <div class="form-group required">
+        <div class="form-group required rating-wrapper">
             <label for="review_rating" class="control-label">Valutazione</label>
             {{ review_form.rating(class="form-control", id="review_rating", required="required", type="hidden") }}
-            <p class="display-slider">{{ review_form.rating.data }}</p>
+            {% if review_form.rating.data %}
+                <p class="display-slider">{{ review_form.rating.data }}</p>
+            {% else %}
+                <p class="display-slider">1.0</p>
+            {% endif %}
             <div class="slider"></div>
         </div>
 
@@ -51,7 +55,7 @@
             {{ review_form.recommended(id="review_recommended") }}
         </div>
 
-        {{ review_form.submit(class="btn btn-default") }}
+        {{ review_form.submit(class="btn btn-main btn-effect") }}
     </form>
 
     <script type="text/javascript">

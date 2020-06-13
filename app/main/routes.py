@@ -101,7 +101,13 @@ def view_title(id):
 
     answer_form = AnswerDiscussionForm(request.values, title_parent_id=str(title.id))
 
-    return render_template("title/view.html", title=html.unescape(title.name), t=title, reviews=reviews, review_form=review_form, discussion_form=discussion_form, answer_form=answer_form)
+    recommended_by_genre = Title.recommended_by_genre()
+    recommended_by_title = Title.recommended_by_title()
+
+    return render_template("title/view.html", title=html.unescape(title.name), header_classes="header-fixed header-transparent text-white", 
+    t=title, reviews=reviews, 
+    recommended_by_genre=recommended_by_genre, recommended_by_title=recommended_by_title,
+    review_form=review_form, discussion_form=discussion_form, answer_form=answer_form)
 
 @bp.route("/title/review/add", methods=["POST"])
 @login_required

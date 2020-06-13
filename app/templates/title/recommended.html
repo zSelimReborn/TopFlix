@@ -1,20 +1,39 @@
 {% macro recommended_template(recommended_title, recommended) %}
 {% if recommended|length > 0 %}
-<div class="recommended-container">
-    <div class="recommended-title-wrapper">
-        <h4 class="title">{{ recommended_title }}</h4>
-    </div>
-
-    <ul class="recommended-list">
-        {% for title in recommended %}
-            <li class="recommended-item">
-                <div class="recommended">
-                    <p class="name">{{ title.name }}</p>
-                    <p class="genres">{{ title.genres_as_string() }}</p>
+<section class="recommended-container recommended-movies bg-light ptb100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 recommended-title-wrapper">
+                <h2 class="title">{{ recommended_title }}</h2>
+            </div>
+        </div>
+    
+        <ul class="recommended-list owl-carousel title-carousel recommended-slider mt20">
+            {% for title in recommended %}
+            <li class="recommended-item item">
+                <div class="movie-box-1">
+                    <div class="poster">
+                        <img src="{{ title.title_poster() }}" alt="{{ title.name|safe }}">
+                    </div>
+                    <div class="buttons">
+                        <a href="{{ title.watch_link() }}"
+                            class="play-video" target="_blank">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="movie-details">
+                        <h4 class="movie-title">
+                            <a href="{{ title.detail_link() }}">{{ title.name|safe }}</a>
+                        </h4>
+                        <span class="released">{{ title.year }}</span>
+                    </div>
+                    {% set t = title %}
+                    {% include "review/summary.html" %}
                 </div>
             </li>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>    
+    </div>
+</section>
 {% endif %}
 {% endmacro %}

@@ -103,7 +103,7 @@ class Title(db.Document):
         return t
     
     def genres_as_string(self):
-        return '/'.join(str(genre.name) for genre in self.genres)
+        return '/'.join(str(genre.name) for genre in self.genres[0:3])
 
     def watch_link(self):
         base_url = "https://www.netflix.com/title/{net_id}"
@@ -121,6 +121,9 @@ class Title(db.Document):
 
     def reviews(self):
         return Review.get_by_title(self)
+    
+    def get_reviews_count(self):
+        return self.reviews().count()
 
     def discussions(self):
         return Discussion.get_by_title(self)

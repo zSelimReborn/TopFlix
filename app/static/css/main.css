@@ -148,7 +148,7 @@
     display: block;
 }
 
-.homepage .messages {
+.messages {
     position: absolute;
     z-index: 99;
     width: 100%;
@@ -159,7 +159,7 @@
     transform: translateX(-50%);
 }
 
-.homepage .main-container {
+.main-container {
     position: relative;
 }
 
@@ -232,7 +232,315 @@ header.header .navbar-nav .nav-item .btn.btn-main {
     display: none;
 }
 
+
+.title-view .btn.rate-movie.has_like, .title-view .btn.rate-movie.has_dislike {
+    opacity: 1;
+}
+
+.recommended-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.title-view .rating {
+    display: flex;
+    align-items: center;
+}
+
+.title-view .rating .review-summary .stars {
+    display: flex;
+    align-items: center;
+}
+
+.title-view .review-list .reviews-count {
+    font-size: 17px;
+    opacity: 1;
+    color: #333;
+    border-bottom: 1px solid #fbfbfb;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.review-wrapper .review-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+    border-bottom: 1px solid #fbfbfb;
+}
+
+.review-wrapper .review-item .title {
+    font-size: 24px;
+    color: #555555;
+    margin-right: 15px;
+    padding-bottom: 0;
+}
+
+.review-wrapper .review-item .rating {
+    display: inline-block !important;
+    margin: 0;
+    font-size: 27px;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #c33829;
+    border-radius: 50%;
+    padding: 25px 10px;
+}
+
+.review-wrapper .review-item .review-actions {
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.review-wrapper .review-item .rating > .base {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.review-wrapper .review-item.review-full {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 0;
+}
+
+.review-wrapper .review-item.review-full .back-button {
+    padding: 0;
+    color: #333;
+    text-transform: initial;
+    text-decoration: underline;
+}
+
+.review-wrapper .review-item.review-full .review-upper-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.review-wrapper .review-item.review-full .review-content {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.review-wrapper .review-item.review-full .review-content > * {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: #fbfbfb;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper.pros .point-title {
+    border-color: #00ab54;
+    color: #00ab54;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper.cons .point-title {
+    border-color: #f71735;
+    color: #f71735;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper .point-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 4px solid;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper {
+    margin-top: 20px;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper:first-of-type {
+    margin: 0;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper > ul {
+    padding-left: 0;
+    margin-top: 15px;
+    list-style: none;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper > ul > li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper > ul > li::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    border-radius: 50%;
+}
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper.pros > ul > li::before {
+    background: #00ab54;
+}
+
+
+.review-wrapper .review-item.review-full .pros-cons-wrapper .point-wrapper.cons > ul > li::before {
+    background: #f71735;
+}
+
+.review-wrapper .review-item.review-full .recommended-wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.review-wrapper .review-item.review-full .recommended-wrapper .recommended {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.review-wrapper .review-item.review-full .recommended-wrapper .recommended > .text {
+    font-size: 20px;
+    color: #757575;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.review-wrapper .review-item.review-full .recommended-wrapper .recommended [class*='icon'] {
+    font-size: 40px;
+}
+
+.review-wrapper .review-item.review-full .recommended-wrapper .recommended .icon-check {
+    color: #00ab54;
+}
+
+.review-wrapper .review-item.review-full .recommended-wrapper .recommended .icon-close {
+    color: #f71735;
+}
+
+.review-wrapper .review-item.review-full .published-by .author {
+    font-style: italic;
+}
+
+.title-view .review-list .review-wrapper .reviews-action {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.title-view .review-list .review-wrapper {
+    position: relative;
+}
+
+.title-view .review-list .review-wrapper .reviews-action [class*='icon'] {
+    font-size: 20px;
+}
+
+.title-view .review-list .review-wrapper .reviews-action .remove-btn [class*='icon'] {
+    color: #f71735;
+}
+
+.title-view .review-list .review-wrapper .reviews-action .edit-btn [class*='icon'] {
+    color: #757575;
+}
+
+.title-view .review-list .review-wrapper.view-full .reviews-action {
+    left: 15rem;
+    top: 5px;
+}
+
+.review-form .rating-wrapper {
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+}
+
+.review-form .rating-wrapper .display-slider {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.review-form .rating-wrapper .slider {
+    background: #c33829;
+    border: 0;
+    border-radius: 0;
+    height: 5px;
+}
+
+.review-form .rating-wrapper .slider .ui-slider-handle {
+    width: 10px;
+    height: 20px;
+    border-color: #ddd;
+    background: #fff;
+    top: -7px;
+}
+
+.review-form .pros-cons-container .pros-cons-wrapper > .btn {
+    margin-left: 10px;
+}
+
+.review-form .pros-cons-container {
+    margin-bottom: 2.5rem;
+}
+
+.review-form .pros-cons-container .pros-cons-wrapper > .field-list .pros-cons-field-wrapper {
+    position: relative;
+}
+
+.review-form .pros-cons-container .pros-cons-wrapper > .field-list .pros-cons-field-wrapper .pros-cons-rm {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    background: none;
+    border: 0;
+}
+
+.review-form .pros-cons-container .pros-cons-wrapper > .field-list .pros-cons-field-wrapper .form-control {
+    padding-right: 40px;
+}
+
+.tab-wrapper .tab-titles .tab-title {
+    margin-bottom: 0;
+    margin-right: 15px;
+    font-size: 15px;
+    color: #757575;
+}
+
+.tab-wrapper .tab-titles {
+    margin-bottom: 2.5rem;
+}
+
+.new-discussion-form .btn.btn-default {
+    background: #c33829;
+    color: #fff;
+}
+
 @media screen and (min-width: 768px) {
+
+    .title-view .movie-detail-intro2 .movie-details {
+        width: 60%;
+    }
     .banner-list .col-md-8 .movie-box-1 .poster {
         max-height: 450px;
         overflow: hidden;
@@ -266,5 +574,16 @@ header.header .navbar-nav .nav-item .btn.btn-main {
 @media screen and (max-width: 768px) {
     .banner-list .col-md-8 {
         margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .review-wrapper .review-item .rating {
+        font-size: 20px;
+        padding: 15px 5px;
+    }
+    
+    .review-wrapper .review-item .rating > .base {
+        font-size: 13px;
     }
 }

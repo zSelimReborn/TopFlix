@@ -1,34 +1,36 @@
-<div class="review-full">
+<div class="review-full review-item">
+    <button class="back-button btn btn-link">Torna indietro</button>
     <div class="review-upper-content">
-        <h3 class="review-title">{{ review.title }}</h3>
-        <button class="back-button btn btn-link">Torna indietro</button>
+        <h3 class="review-title title">{{ review.title }}</h3>
+        <div class="review-rating">
+            <p class="rating">
+                {{ review.rating }}<span class="base">/10</span>
+            </p>
+        </div>
     </div>
+
     <div class="review-content">
         <p>
             {{ review.content }}
         </p>
     </div>
-    <div class="review-rating">
-        <p class="rating">
-            {{ review.rating }}/10
-        </p>
-    </div>
+    
 
     <div class="pros-cons-wrapper">
-        <div class="point-wrapper">
+        <div class="point-wrapper pros">
             <p class="point-title">PRO</p>
             <ul class="pros-wrapper">
                 {% for point in review.pros() %}
-                <li class="pros">{{point.content}}</li>
+                <li class="pros">{{point.content|safe}}</li>
                 {% endfor %}
             </ul>
         </div>
         
-        <div class="point-wrapper">
+        <div class="point-wrapper cons">
             <p class="point-title">CONTRO</p>
             <ul class="cons-wrapper">
                 {% for point in review.cons() %}
-                    <li class="pros">{{point.content}}</li>
+                    <li class="cons">{{point.content|safe}}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -38,14 +40,14 @@
         <p class="recommended">
             <span class="text">Consigliato</span>
             {% if review.recommended %}
-                <span class="material-icons">done_outline</span>
+                <span class="icon-check"></span>
             {% else %}
-                <span class="material-icons">cancel</span>
+                <span class="icon-close"></span>
             {% endif %}
         </p>
     </div>
 
     <div class="published-by">
-        <p class="text">Pubblicato da: {{ review.get_author().fullname() }}</p>
+        <p class="text">Pubblicato da: <span class="author">{{ review.get_author().fullname() }}</span></p>
     </div>
 </div>

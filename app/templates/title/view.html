@@ -1,68 +1,107 @@
 {% extends "index.html" %}
+{% from "title/recommended.html" import recommended_template %}
+
 {% block app_content %}
-    <div class="title-view">
-        <h1 class="name">{{t.name | safe}}</h1>
-        <div class="rating">
-            {% include "review/summary.html" %}
-        </div>
-        <div class="description-wrapper">
-            <p class="description">
-                {{t.description | safe}}
-            </p>
-        </div>
-        <div class="watch-now">
-            <a href="{{ t.watch_link() }}">Guardalo ora!</a>
-        </div>
-        {% if current_user.is_authenticated %}
-        <div class="like-wrapper">
-            {% set like_classes = "has_like" if current_user.is_authenticated and current_user.has_liked_title(t) else "" %}
-            {% set dislike_classes = "has_dislike" if current_user.is_authenticated and current_user.has_disliked_title(t) else "" %}
+<div class="title-view">
+    <section class="movie-detail-intro overlay-gradient ptb100"
+        style="background: url({{ url_for('static', filename='images/slider/slider1.jpg') }});"></section>
 
-            <div class="like {{ like_classes }}">
-                <a href="{{ url_for('main.toggle_like', title_id=t.id|string, like=1) }}">
-                    <span class="material-icons-outlined">thumb_up</span>
-                </a>
-            </div>
-            <div class="dislike {{ dislike_classes }}">
-                <a href="{{ url_for('main.toggle_like', title_id=t.id|string, like=0) }}">
-                    <span class="material-icons-outlined">thumb_down</span>
-                </a>
-            </div>
-        </div>
-        {% endif %}
-        <div class="image-wrapper">
-            <img src="{{t.poster}}" alt="{{t.name | safe}}">
-        </div>
+    <section class="movie-detail-intro2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="movie-poster">
+                        <img src="{{ t.title_poster() }}" alt="{{ t.name|safe }}">
+                        <a href="{{ t.watch_link() }}"
+                            target="_blank"
+                            class="play-video">
+                            <i class="fa fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="movie-details">
+                        <h1 class="title">{{t.name | safe}}</h1>
+                        <ul class="movie-subtext">
+                            <li>{{ t.genres_as_string() }}</li>
+                            <li>{{ t.year }}</li>
+                        </ul>
+                        {% if current_user.is_authenticated %}
+                        {% set like_classes = "has_like" if current_user.is_authenticated and current_user.has_liked_title(t) else "" %}
+                        {% set dislike_classes = "has_dislike" if current_user.is_authenticated and current_user.has_disliked_title(t) else "" %}                
 
-        <div class="tab-wrapper">
-            <div class="tab-titles">
-                <p class="tab-title active" data-target=".reviews-wrapper">Recensioni</p>
-                <p class="tab-title" data-target=".new-review"> Scrivi una recensione</p>
-                <p class="tab-title" data-target=".discussion-wrapper">Discussioni</p>
-                <p class="tab-title" data-target=".new-discussion">Inizia una discussione</p>
+                        <a href="{{ url_for('main.toggle_like', title_id=t.id|string, like=0) }}" class="btn rate-movie {{ dislike_classes }}"><i class="icon-dislike"></i></a>
+                        <a href="{{ url_for('main.toggle_like', title_id=t.id|string, like=1) }}" class="btn rate-movie {{ like_classes }}"><i class="icon-like"></i></a>
+
+                        {% endif %}
+                        <div class="rating mt10">
+                            {% include "review/summary.html" %}
+                            <span>{{ t.get_reviews_count() }} Recensioni</span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
             </div>
-            <div class="tab-contents">
-                <div class="tab reviews-wrapper active">
-                    <div class="tab-content">
-                        {% include "review/short/list.html" %}
-                    </div>
-                </div>
-                <div class="tab new-review">
-                    <div class="tab-content">
-                        {% include "review/form.html" %}
-                    </div>
-                </div>
-                <div class="tab discussion-wrapper">
-                    <div class="tab-content">
-                        {% include "discussion/short/list.html" %}
-                    </div>
-                </div>
-                <div class="tab new-discussion">
-                    <div class="tab-content">
-                        {% include "discussion/form.html" %}
-                    </div>
-                </div>
-            </div> 
         </div>
-    </div>
+    </section>
+
+    <section class="movie-detail-main ptb100">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-sm-12">
+                    <div class="inner pr50">
+
+                        <div class="storyline">
+                            <h3 class="title">Trama</h3>
+                            <p>{{t.description | safe}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 tab-wrapper">
+                    <div class="tab-wrapper">
+                        <div class="tab-titles">
+                            <p class="tab-title active" data-target=".reviews-wrapper">Recensioni</p>
+                            {% if current_user.is_authenticated %}
+                                <p class="tab-title" data-target=".new-review"> Scrivi una recensione</p>
+                            {% endif %}
+                            <p class="tab-title" data-target=".discussion-wrapper">Discussioni</p>
+                            {% if current_user.is_authenticated %}
+                                <p class="tab-title" data-target=".new-discussion">Inizia una discussione</p>
+                            {% endif %}
+                        </div>
+                        <div class="tab-contents">
+                            <div class="tab reviews-wrapper active">
+                                <div class="tab-content">
+                                    {% include "review/short/list.html" %}
+                                </div>
+                            </div>
+                            {% if current_user.is_authenticated %}
+                            <div class="tab new-review">
+                                <div class="tab-content">
+                                    {% include "review/form.html" %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="tab discussion-wrapper">
+                                <div class="tab-content">
+                                    {% include "discussion/short/list.html" %}
+                                </div>
+                            </div>
+                            {% if current_user.is_authenticated %}
+                            <div class="tab new-discussion">
+                                <div class="tab-content">
+                                    {% include "discussion/form.html" %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{ recommended_template("Ecco i nostri consigliati", recommended_by_genre) }}
+    {{ recommended_template("In base ai titoli che ti sono piaciuti...", recommended_by_title) }}
+
+</div>
 {% endblock %}
