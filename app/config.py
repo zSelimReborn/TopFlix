@@ -1,16 +1,20 @@
 import os
 
 class Config(object):
-    SECRET_KEY = "mega_super_secret_key"
-    #MONGOALCHEMY_DATABASE = 'db'
-    #MONGOALCHEMY_SERVER = 'mongodb'
-    #MONGOALCHEMY_PORT = '27017'
-    #MONGOALCHEMY_CONNECTION_STRING = "mongodb://mongodb:27017/db"
-    MONGODB_DB = 'db'
-    MONGODB_HOST = "mongodb"
-    MONGODB_PORT = 27017
-    #MONGODB_USERNAME = os.environ.get("DB_USER")
-    #MONGODB_PASSWORD = os.environ.get("DB_PASS")
+    SECRET_KEY = os.environ.get("FLASK_SECRET_KEY")
+
+    MONGODB_DATABASE = os.environ.get("MONGODB_DB")
+    #MONGODB_HOST = os.environ.get("MONGODB_HOST")
+    #MONGODB_PORT = int(os.environ.get("MONGODB_PORT") or 27017)
+    #MONGODB_USERNAME = os.environ.get("MONGODB_USERNAME")
+    #MONGODB_PASSWORD = os.environ.get("MONGODB_PASSWORD")
+    MONGODB_URI = os.environ.get("MONGODB_URI")
+
+    MONGODB_SETTINGS = {
+        "DB": MONGODB_DATABASE,
+        "host": MONGODB_URI
+    }
+
     FLASK_DEBUG = True
     PROPAGATE_EXCEPTIONS = True
     JSONIFY_PRETTYPRINT_REGULAR = True

@@ -15,9 +15,8 @@ services:
             - NETFLIX_API_URL=${NETFLIX_API_URL}
             - NETFLIX_API_KEY=${NETFLIX_API_KEY}
             - FILE_OFFSET_LOCATION=${FILE_OFFSET_LOCATION}
-            - DB_USER=${DB_USERNAME}
-            - DB_PASS=${DB_PASSWORD}
-            - DB_NAME=${DB_NAME}
+            - MONGODB_DB=${MONGODB_DB}
+            - MONGODB_URI=${MONGODB_URI}
             - FB_APP_ID=${FACEBOOK_APP_ID}
             - FB_SECRET_KEY=${FACEBOOK_SECRET_KEY}
             - OAUTHLIB_INSECURE_TRANSPORT=${INSECURE_TRANSPORT}
@@ -28,6 +27,7 @@ services:
             - MAIL_USERNAME=${MAIL_USERNAME}
             - MAIL_PASSWORD=${MAIL_PASSWORD}
             - MAIL_ADMIN=${MAIL_ADMIN}
+            - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
     nginx:
         image: webapp-nginx
         build:
