@@ -174,6 +174,7 @@ def edit_review(review_id):
         flash("Non è possibile modificare recensioni di altri utenti")
         return redirect(url_for("main.view_title", id=title_id))
 
+    title = Title.get_by_id(title_id)
     review_form = EditReviewForm()
     if not review_form.validate_on_submit():
         review_form.title.data = review.title
@@ -187,7 +188,7 @@ def edit_review(review_id):
         for cons in review.cons_as_string():
             review_form.cons.append_entry(cons)
 
-        return render_template("review/edit.html", title="Modifica recensione {name}".format(name=review.title), review_form=review_form)
+        return render_template("review/edit.html", title="Modifica recensione {name}".format(name=review.title), review_form=review_form, review_title=title)
 
     
     review.title = review_form.title.data
@@ -267,12 +268,13 @@ def edit_discussion(discussion_id):
         flash("Non è possibile modificare discussioni di altri utenti")
         return redirect(url_for("main.view_title", id=title_id))
     
+    title = Title.get_by_id(title_id)
     discussion_form = EditDiscussionForm()
     if not discussion_form.validate_on_submit():
         discussion_form.title.data = discussion.title
         discussion_form.description.data = discussion.description
 
-        return render_template("discussion/edit.html", discussion_form=discussion_form)
+        return render_template("discussion/edit.html", discussion_form=discussion_form, discussion_title=title)
 
     discussion.title = discussion_form.title.data
     discussion.description = discussion_form.description.data

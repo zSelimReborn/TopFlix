@@ -156,17 +156,16 @@
                         </li>
                     </ul>
 
-                    {% if not current_user.is_authenticated %}
                     <ul class="navbar-nav extra-nav">
+                        {% if not current_user.is_authenticated %}
                         <li class="nav-item m-auto">
                             <a href="#login-register-popup" class="btn btn-main
                                 btn-effect login-btn popup-with-zoom-anim">
                                 <i class="icon-user"></i>Accedi
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
-                    {% endif %}
-
                 </div>
 
             </nav>

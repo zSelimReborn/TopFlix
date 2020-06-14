@@ -4,30 +4,30 @@
 {% block app_content %}
 <div class="page-not-found-container">
     <section class="page-header overlay-gradient" style="background: url({{ url_for('static', filename='images/posters/movie-collection.jpg') }});">
-    <div class="container">
-        <div class="inner">
-            <h2 class="title">OPS! Pagina non trovata</h2>
-            <ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li>404! Film non trovato</li>
-            </ol>
-        </div>
-    </div>
-</section>
-
-<main class="page-not-found ptb100">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>404</h2>
-                <h3>Come ci sei finito qui?</h3>
-                <p>Probabilmente la storia che cerchi non è stata ancora girata.</p>
-
-                {{ carousel_template("Ti consigliamo!", title_collection, "", "", "latest-movies") }}
+        <div class="container">
+            <div class="inner">
+                <h2 class="title">OPS! Pagina non trovata</h2>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li>404! Film non trovato</li>
+                </ol>
             </div>
         </div>
-    </div>
-</main>
+    </section>
+
+    <main class="page-not-found ptb100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>404</h2>
+                    <h3>Come ci sei finito qui?</h3>
+                    <p>Probabilmente la storia che cerchi non è stata ancora girata.</p>
+
+                    {{ carousel_template("Ti consigliamo!", title_collection, "", "", "latest-movies") }}
+                </div>
+            </div>
+        </div>
+    </main>
 
 </div>
 {% endblock %}
