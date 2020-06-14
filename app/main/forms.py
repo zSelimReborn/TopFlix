@@ -59,4 +59,4 @@ class SurveyGenreForm(FlaskForm):
     submit = SubmitField("Salva")
 
     def genres(self):
-        return Genre.objects()
+        return Genre.objects().limit(50)
