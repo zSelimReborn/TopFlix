@@ -3,9 +3,9 @@
 <div class="discussion-actions upvotes {{additional_classes}} {{upvote_type}}">
     <a href="{{url_for('main.add_upvote', discussion_id=d.id|string())}}" 
         data-value="1" data-discussion="{{d.id|string()}}"
-        class="vote upvote btn btn-sm btn-link"><span class="material-icons">arrow_upward</span></a>
+        class="vote upvote btn btn-sm btn-link"><span class="icon-arrow-up"></span></a>
     <span class="current-upvotes">{{ d.upvotes_value() if d.upvotes_value() else 0 }}</span>
     <a href="{{url_for('main.add_upvote', discussion_id=d.id|string())}}" 
         data-value="-1" data-discussion="{{d.id|string()}}"
-        class="vote downvote btn btn-sm btn-link"><span class="material-icons">arrow_downward</span></a>
+        class="vote downvote btn btn-sm btn-link"><span class="icon-arrow-down"></span></a>
 </div>

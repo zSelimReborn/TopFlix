@@ -2,15 +2,12 @@
     <a href="#" class="back-discussion btn btn-link">Torna a tutte le discussioni</a>
     <div class="upper-info">
         <p class="discussion-title">{{ discussion.title }}</p>
-        <p class="author-info">Postato da: {{ discussion.get_author().fullname() }}</p>
+        <p class="author-info">Postato da: <span class="author">{{ discussion.get_author().fullname() }}</span> il <span class="posted-on">{{ discussion.created_at.strftime('%d/%m/%Y') }}</span></p>
     </div>
     <div class="discussion-content">
         <p class="content">
             {{discussion.description}}
         </p>
-    </div>
-    <div class="posted">
-        <p class="posted-on">{{ discussion.created_at.strftime('%d/%m/%Y') }}</p>
     </div>
 
     <div class="answer-form">

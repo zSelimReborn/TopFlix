@@ -536,6 +536,120 @@ header.header .navbar-nav .nav-item .btn.btn-main {
     color: #fff;
 }
 
+.title-view .discussion-list .discussion-count {
+    font-size: 17px;
+    opacity: 1;
+    color: #333;
+    border-bottom: 1px solid #fbfbfb;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.title-view .discussion-list {
+    padding-left: 0;
+    list-style: none;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper {
+    padding: 5px 20px 10px;
+    border-bottom: 1px solid #fbfbfb;
+}
+
+.discussion-wrapper .upvotes-wrapper .vote [class*='icon'] {
+    font-size: 15px;
+    color: #757575;
+}
+
+.discussion-wrapper .upvotes-wrapper .upvotes.upvote .vote.upvote [class*='icon'] {
+    color: #00ab54;
+}
+
+.discussion-wrapper .upvotes-wrapper .upvotes.downvote .vote.downvote [class*='icon'] {
+    color: #f71735;
+}
+
+.discussion-wrapper .discussion-title {
+    font-size: 24px;
+    color: #555555;
+    margin-right: 15px;
+    padding-bottom: 0;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+.discussion-wrapper .discussion-full .back-discussion {
+    text-transform: initial;
+    padding: 0;
+    color: #333;
+    text-decoration: underline;
+}
+
+.discussion-wrapper .discussion-full .author-info .author {
+    font-style: italic;
+}
+
+.discussion-wrapper .discussion-full .author-info {
+    margin: 0;
+    opacity: 0.7;
+}
+
+.discussion-wrapper .discussion-full .upper-info {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.discussion-wrapper .discussion-full .discussion-content .content {
+    font-size: 16px;
+    color: #757575;
+    margin-bottom: 0;
+}
+
+.discussion-wrapper .discussion-full .discussion-content {
+    margin-bottom: 5px;
+}
+
+.discussion-wrapper .discussion-full .answer-form .answer-btn {
+    border: 1px solid #333;
+}
+
+.discussion-wrapper .discussion-full .answer-form .form-wrapper {
+    margin-top: 15px;
+}
+
+.discussion-wrapper .discussion-full .answer-form .new-answer-form .btn {
+    border: 1px solid #333;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper {
+    position: relative;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper > .discussion-actions {
+    display: flex;
+    align-items: center;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper > .discussion-actions .btn.btn-link [class*='icon'] {
+    font-size: 20px;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper > .discussion-actions .remove-discussion.btn.btn-link [class*='icon'] {
+    color: #f71735;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper > .discussion-actions .edit-discussion.btn.btn-link [class*='icon'] {
+    color: #757575;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper > .discussion-actions, .discussion-wrapper .discussion-list > .discussion-wrapper > .upvotes-wrapper {
+    float: left;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper > .discussion-short, .discussion-wrapper .discussion-list > .discussion-wrapper > .discussion-full {
+    clear: both;
+    padding-top: 5px;
+}
+
 @media screen and (min-width: 768px) {
 
     .title-view .movie-detail-intro2 .movie-details {

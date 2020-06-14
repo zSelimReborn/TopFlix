@@ -1,17 +1,19 @@
 <ul class="discussion-list title-{{t.id|string()}}">
-    {% for discussion in t.discussions() %}
+    {% set discussions = t.discussions() %}
+    <p class="discussion-count">{{ discussions.count() }} Discussioni</p>
+    {% for discussion in discussions %}
         {% if not discussion.is_answer %}
         <li class="discussion-wrapper">
             <div class="discussion-actions">
                 {% if discussion.is_author(current_user) %}
                     <div class="remove-wrapper">
                         <a href="{{ url_for('main.remove_discussion', discussion_id=discussion.id|string) }}" class="btn btn-link remove-discussion">
-                            <span class="material-icons">cancel</span>
+                            <span class="icon-close"></span>
                         </a>
                     </div>
                     <div class="edit-wrapper">
                         <a href="{{ url_for('main.edit_discussion', discussion_id=discussion.id|string) }}" class="btn btn-link edit-discussion">
-                            <span class="material-icons">edit</span>
+                            <span class="icon-pencil"></span>
                         </a>
                     </div>
                 {% endif %}
@@ -35,6 +37,7 @@
 <script type="text/javascript">
     $(function() {
         $(".view-discussion").on("click", function(e) {
+            e.preventDefault();
             let btn = $(this);
             let wrapper = btn.closest(".discussion-wrapper");
             let wrapperList = wrapper.closest(".discussion-list");
@@ -47,6 +50,7 @@
         });
 
         $(".back-discussion").on("click", function(e) {
+            e.preventDefault();
             let btn = $(this);
             let wrapper = btn.closest(".discussion-wrapper");
             let wrapperList = wrapper.closest(".discussion-list");

@@ -32,6 +32,26 @@ $(function() {
                 if (res["success"] === true) {
                     let wrapperBtn = btn.closest(".upvotes");
                     let upvoteText = wrapperBtn.find(".current-upvotes").text(res["value"]);
+
+                    // Se aveva già votato
+                    if (wrapperBtn.hasClass('upvote')) {
+                        // Se ha cliccato di nuovo su voto positivo rimuovo, altrimenti rimuovo upvote ed aggiungo downvote
+                        if (value === 1) {
+                            wrapperBtn.removeClass("already-upvoted").removeClass("upvote");
+                        } else {
+                            wrapperBtn.removeClass("upvote").addClass("downvote");
+                        }
+                    } else if (wrapperBtn.hasClass("downvote")) {
+                        if (value === -1) {
+                            wrapperBtn.removeClass("already-upvoted").removeClass("downvote");
+                        } else {
+                            wrapperBtn.removeClass("downvote").addClass("upvote");
+                        }
+                    } else {
+                        wrapperBtn.addClass("already-upvoted");
+                        let voteClass = (value === 1)? "upvote" : "downvote";
+                        wrapperBtn.addClass(voteClass);
+                    }
                 }
             }
         });
