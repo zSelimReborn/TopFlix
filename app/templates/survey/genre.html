@@ -1,26 +1,49 @@
 {% extends "index.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
 <div class="genre-liked-survey">
-    {% block app_content %}
-    <h1>Parlaci un po' di te</h1>
-    <p>Ti chiediamo solo un po' del tuo preziosissimo tempo per poter essere sicuri di consigliarti sempre qualcosa di tuo gradimento! </p>
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="legend">Quali sono i generi che più ti piacciono?</h2>
-            <form action="" role="form" method="POST" class="form" >
-                {{ form.hidden_tag() }} 
-                {{ form.survey_id() }}
-                {{ wtf.form_errors(form, hiddens="only") }}
-                
-                {% for genre in form.genres() %}
-                    <div class="form-group">
-                        <input type="checkbox" name="genres_liked-{{loop.index0}}" id="genre_{{ genre.id|string }}" class="form-check-input" value="{{ genre.id|string }}" >
-                        <label for="genre_{{ genre.id|string }}" class="control-label">{{ genre.name }}</label>
-                    </div>
-                {% endfor %}
-                {{ form.submit(class="btn btn-default") }}
-            </form>
+    <section class="page-header overlay-gradient" style="background: url({{ url_for('static', filename='images/posters/movie-collection.jpg') }});">
+        <div class="container">
+            <div class="inner">
+                <h2 class="title">Parlaci un po' di te</h2>
+                <p>Ti chiediamo solo un po' del tuo preziosissimo tempo per poter essere sicuri di consigliarti sempre qualcosa di tuo gradimento! </p>
+            </div>
+        </div>
+    </section>
+    <div class="container genres-list-container">
+        <div class="inner">
+            <div class="row genres-list">
+                <div class="col-md-12">
+                    <p class="form-explain">Quali sono i generi che più ti piacciono?</p>
+                    <form action="" role="form" method="POST" class="form" >
+                        {{ form.hidden_tag() }} 
+                        {{ form.survey_id() }}
+                        {{ wtf.form_errors(form, hiddens="only") }}
+                        
+                        {% for genre in form.genres() %}
+                            <div class="movie-list-2">
+                                <div class="listing-container">
+                                    <div class="listing-image">
+                                        <div class="img-wrapper">
+                                            <img src="{{ genre.get_image() }}" alt="{{ genre.name|safe }}" class="genre-image-sample">
+                                        </div>
+                                    </div>
+                                    <div class="listing-content">
+                                        <div class="form-group">
+                                            <input type="checkbox" name="genres_liked-{{loop.index0}}" id="genre_{{ genre.id|string }}" class="form-check-input" value="{{ genre.id|string }}" >
+                                            <label for="genre_{{ genre.id|string }}" class="control-label">{{ genre.name }}</label>
+                                        </div>            
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="form-group submit-button">
+                            {{ form.submit(class="btn btn-main btn-effect") }}
+                        </div>
+                    </form>
+                </div>
+            </div>        
         </div>
     </div>
-    {% endblock %}
 </div>
+{% endblock %}

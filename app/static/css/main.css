@@ -659,6 +659,82 @@ header.header .navbar-nav .nav-item .btn.btn-main {
     text-decoration: underline;
 }
 
+.wrapper .main-container .page-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+}
+
+.main-container .genre-liked-survey .form-explain {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .form-group {
+    padding: 0 15px;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .form-group label {
+    margin-top: 1rem;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .form-group.submit-button {
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .form-group.submit-button > .btn {
+    min-width: 200px;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .movie-list-2 {
+    margin-bottom: 80px;
+    max-width: 33.33333333%;
+    background: none;
+    padding: 0 15px;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .movie-list-2 .listing-container {
+    flex-direction: column;
+    background: #343a40;
+    border-radius: 5px;
+    height: 345px;
+    padding-bottom: 15px;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .form {
+    margin-top: 100px;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .movie-list-2 .listing-container .listing-content .form-group {
+    width: 100%;
+    margin: 0;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .movie-list-2 .listing-container .listing-content {
+    flex: none;
+}
+
+.genre-liked-survey .genres-list-container .genres-list .movie-list-2 .listing-container .listing-content .form-group label {
+    color: #fff;
+}
+
+@media screen and (max-width: 991px) {
+    .genre-liked-survey .genres-list-container .genres-list .movie-list-2 {
+        max-width: 50%;
+    }
+}
+
 @media screen and (min-width: 768px) {
 
     .title-view .movie-detail-intro2 .movie-details {
@@ -708,5 +784,11 @@ header.header .navbar-nav .nav-item .btn.btn-main {
     
     .review-wrapper .review-item .rating > .base {
         font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .genre-liked-survey .genres-list-container .genres-list .movie-list-2 {
+        max-width: 100%;
     }
 }

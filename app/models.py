@@ -15,6 +15,16 @@ class Genre(db.Document):
     name = db.StringField()
     meta = {'collection': 'Genre'}
 
+    def get_image(self):
+        titles = Title.objects.filter(genres__contains=self)
+        skip_random = random.randint(0, titles.count())
+
+        title_sample = titles.skip(skip_random).first()
+
+        if title_sample is not None:
+            return title_sample.title_poster()
+        return url_for('static', filename='images/movie_default.png')
+
     @staticmethod
     def get_by_id(id):
         try:
