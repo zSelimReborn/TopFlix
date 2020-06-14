@@ -8,6 +8,7 @@ import json
 import html
 from datetime import datetime
 from time import time
+import re
 
 from app.auth.models import User
 from app.models import *
@@ -63,7 +64,13 @@ def homepage():
 def list_title():
     limit_title = 8
 
-    titles = Title.objects()
+    query = request.args.get("query")
+    if query is not None:
+        regex = re.compile('.*' + query + '.*', re.IGNORECASE)
+        titles = Title.objects(name=regex)
+    else:
+        titles = Title.objects()
+
     order_by = request.args.get("order_by")
     if order_by is not None:
         titles = titles.order_by(order_by)

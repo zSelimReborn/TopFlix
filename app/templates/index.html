@@ -157,6 +157,11 @@
                     </ul>
 
                     <ul class="navbar-nav extra-nav">
+                        <li class="nav-item">
+                            <a class="nav-link toggle-search" href="#">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
                         {% if not current_user.is_authenticated %}
                         <li class="nav-item m-auto">
                             <a href="#login-register-popup" class="btn btn-main
@@ -326,6 +331,13 @@
 </footer>
 <div id="backtotop">
     <a href="#"></a>
+</div>
+
+<div class="general-search-wrapper">
+    <form class="general-search" role="search" method="get" action="{{ url_for('main.list_title') }}">
+        <input type="text" placeholder="Cerca..." name="query">
+        <span id="general-search-close" class="ti-close toggle-search"></span>
+    </form>
 </div>
 
 {% if not current_user.is_authenticated %}

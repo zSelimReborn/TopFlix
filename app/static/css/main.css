@@ -729,6 +729,10 @@ header.header .navbar-nav .nav-item .btn.btn-main {
     color: #fff;
 }
 
+.general-search-wrapper.open {
+    z-index: 1000000;
+}
+
 @media screen and (max-width: 991px) {
     .genre-liked-survey .genres-list-container .genres-list .movie-list-2 {
         max-width: 50%;

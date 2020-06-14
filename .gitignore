@@ -5,3 +5,7 @@ __pycache__/
 .env
 offset.txt
 .vscode
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
