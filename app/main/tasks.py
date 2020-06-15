@@ -32,6 +32,7 @@ def hello_cron():
     print("I'm running on cron %s" % (time.strftime("%A, %d. %B %Y %I:%M:%S %p")))
 
 def process_netflix_api():
+    return True
     print("Start importing netflix api...")
     print("Time: %s" % (time.strftime("%A, %d. %B %Y %I:%M:%S %p")))
 

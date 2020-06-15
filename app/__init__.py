@@ -39,11 +39,11 @@ def create_app(config_class=Config):
     from app.contact import bp as contact_bp
     app.register_blueprint(contact_bp, url_prefix='/contact')
 
-    from app.main.tasks import process_netflix_api
-    scheduler.add_job(func=process_netflix_api, trigger="cron", hour='00', minute='00', second='00')
+    #from app.main.tasks import process_netflix_api
+    #scheduler.add_job(func=process_netflix_api, trigger="cron", hour='00', minute='00', second='00')
 
-    scheduler.start()
-    atexit.register(lambda: scheduler.shutdown())
+    #scheduler.start()
+    #atexit.register(lambda: scheduler.shutdown())
 
     @app.before_first_request
     def insert_genre_survey():
