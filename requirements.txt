@@ -30,7 +30,8 @@ pymongo
 pytz==2019.2
 requests>=2.20.0
 six
-uWSGI==2.0.18
+uWSGI
+uwsgi
 urllib3>=1.24.2
 virtualenv==1.11.6
 visitor==0.1.3
