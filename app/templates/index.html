@@ -345,7 +345,9 @@
     {% set login_form = g.login_form %}
     {% set register_form = g.register_form %}
     {% set reset_form = g.reset_form %}
-    {% include "auth/user/_complete_form.html" %}
+    {% if login_form and register_form and reset_form %}
+        {% include "auth/user/_complete_form.html" %}
+    {% endif %}
 </div>
 {% endif %}
 
@@ -397,6 +399,17 @@
     }}"></script>
 <script type="text/javascript" src="{{ url_for('static',
     filename='revolution/js/extensions/revolution.extension.video.min.js') }}"></script>
+
+<!-- Socket.IO -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    //let socket = io('ws://localhost:5000', {transports: ['websocket']});
+    let socket = io.connect({transports: ['websocket']});
+
+    window.current_socket = socket;
+
+</script>
+
 <script type="text/javascript">
     $(function() {
         // Gestore immagini in errore

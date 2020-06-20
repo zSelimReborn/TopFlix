@@ -29,7 +29,7 @@ pycparser==2.10
 pymongo
 pytz==2019.2
 requests>=2.20.0
-six==1.8.0
+six
 uWSGI==2.0.18
 urllib3>=1.24.2
 virtualenv==1.11.6
@@ -40,3 +40,5 @@ flask-mongoengine
 flask-dance
 rauth
 APScheduler
+flask-socketio
+gevent

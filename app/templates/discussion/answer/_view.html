@@ -1,0 +1,32 @@
+<div class="answer-wrapper discussion discussion-full">
+    <div class="answer-upper-wrapper">
+        <div class="discussion-actions answer-actions">
+            {% if answer.is_author(current_user) %}
+                <div class="remove-wrapper">
+                    <a href="{{ url_for('main.remove_discussion', discussion_id=answer.id|string) }}" class="remove-btn btn-link btn">
+                        <span class="icon-close"></span>
+                    </a>
+                </div>
+                <div class="edit-wrapper">
+                    <a href="{{ url_for('main.edit_answer', answer_id=answer.id|string) }}" class="edit-btn btn-link btn">
+                        <span class="icon-pencil"></span>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="answer-upvotes upvotes-wrapper">
+            {% with d = answer %}
+                {% include "discussion/upvotes.html" %}
+            {% endwith %}
+        </div>
+    </div>
+   
+
+    <div class="answer-content discussion-content">
+        <p class="content">{{ answer.description }}</p>
+    </div>
+
+    <div class="upper-info">
+        <p class="author-info">Risposta di <span class="author">{{ answer.get_author().fullname() }}</span></p>
+    </div>
+</div>

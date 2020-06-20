@@ -137,6 +137,10 @@ class Title(db.Document):
 
     def discussions(self):
         return Discussion.get_by_title(self)
+    
+    def discussions_count(self):
+        discussions = Discussion.objects.filter(parent=self.id, is_answer=False)
+        return discussions.count()
         
     def rating_average(self):
         return Review.get_avg_rating(self)

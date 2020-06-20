@@ -13,7 +13,7 @@ $(function() {
     });
 
     // Gestione upvote
-    $(".discussion-actions.upvotes .vote").on("click", function(e) {
+    $(document).on("click", '.discussion-actions.upvotes .vote', function(e) {
         e.preventDefault();
 
         let btn = $(this);

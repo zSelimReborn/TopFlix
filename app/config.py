@@ -9,10 +9,12 @@ class Config(object):
     #MONGODB_USERNAME = os.environ.get("MONGODB_USERNAME")
     #MONGODB_PASSWORD = os.environ.get("MONGODB_PASSWORD")
     MONGODB_URI = os.environ.get("MONGODB_URI")
+    MONGO_CONNECT=False
 
     MONGODB_SETTINGS = {
         "DB": MONGODB_DATABASE,
-        "host": MONGODB_URI
+        "host": MONGODB_URI,
+        "connect": False
     }
 
     FLASK_DEBUG = True

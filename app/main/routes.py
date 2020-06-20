@@ -16,6 +16,8 @@ from app.main.tasks import process_netflix_api
 from app.main.models import Review, Survey
 from app.main.forms import AddReviewForm, EditReviewForm, AddDiscussionForm, EditDiscussionForm, AnswerDiscussionForm, EditAnswerDiscussionForm
 from app.auth.forms import LoginForm, RegisterForm, RequestPasswordForm 
+from app import socketio as socket
+
 
 from .survey import SurveySwitchForm
 
@@ -31,6 +33,10 @@ def check_survey_mandatory(function):
 
         return function(**kwargs)
     return wrapper
+
+''' Import eventi socketio '''
+from .socketio import DiscussionNamespace
+socket.on_namespace(DiscussionNamespace())
 
 @bp.before_request
 def inject_user_forms():
@@ -346,12 +352,13 @@ def edit_answer(answer_id):
         flash("Non è possibile modificare risposte di altri utenti")
         return redirect(url_for("main.view_title", id=title_id))
     
+    title = Title.get_by_id(title_id)
     answer_form = EditAnswerDiscussionForm()
     if not answer_form.validate_on_submit():
         answer_form.description.data = answer.description
         answer_form.custom_action = url_for("main.edit_answer", answer_id=answer_id)
 
-        return render_template("discussion/answer/edit.html", answer_form=answer_form, discussion=None)
+        return render_template("discussion/answer/edit.html", answer_form=answer_form, discussion=None, discussion_title=title)
     
     answer.description = answer_form.description.data
     answer.save()

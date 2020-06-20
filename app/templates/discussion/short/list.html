@@ -1,9 +1,9 @@
 <ul class="discussion-list title-{{t.id|string()}}">
     {% set discussions = t.discussions() %}
-    <p class="discussion-count">{{ discussions.count() }} Discussioni</p>
+    <p class="discussion-count">{{ t.discussions_count() }} Discussioni</p>
     {% for discussion in discussions %}
         {% if not discussion.is_answer %}
-        <li class="discussion-wrapper">
+        <li class="discussion-wrapper discussion-{{discussion.id|string}}">
             <div class="discussion-actions">
                 {% if discussion.is_author(current_user) %}
                     <div class="remove-wrapper">
@@ -36,6 +36,8 @@
 
 <script type="text/javascript">
     $(function() {
+        let currentUserId = "{{ current_user.id|string }}";
+
         $(".view-discussion").on("click", function(e) {
             e.preventDefault();
             let btn = $(this);
@@ -60,6 +62,62 @@
 
             wrapper.find(".discussion-full").addClass("hidden");
             wrapper.find(".discussion-short").removeClass("hidden");
+        });
+
+        let parseFormData = function(form) {
+            let data = form.serializeArray();
+            let jsonParsed = {};
+
+            for (d of data) {
+                jsonParsed[d["name"]] = d["value"];
+            }
+            
+            return jsonParsed;
+        };
+
+        let fadeInOutAnimation = function(element) {
+            element.fadeIn(500, function () {
+                element.fadeOut(500, function () {
+                    element.fadeIn(500, function () {});
+                });
+            });
+        };
+
+        $(document).on('submit', '.new-answer-form form', function(e) {
+            e.preventDefault();
+            let form = jQuery(this);
+            let wrapper = form.closest(".new-answer-form");
+            
+            let dicusssionId = wrapper.attr("data-discussion-id");
+            let data = parseFormData(form);
+
+            data["discussion_id"] = dicusssionId;
+
+            form.find("textarea").val("");
+            form.find("input[type='submit']").attr("disabled", true);
+            current_socket.emit("answer_new", data);
+        });
+
+        current_socket.on("answer created", function(data) {
+            if (data["success"] === false) {
+                return;
+            }
+
+            let authorId = data["user_id"];
+            let discussionId = data["discussion_id"];
+            let discussionWrapper = jQuery(".discussion-" + discussionId);
+            let form = discussionWrapper.find(".new-answer-form form");
+
+            let answersList = discussionWrapper.find(".answers-list-wrapper");
+
+            let newAnswer = jQuery(data["new_answer_block"]);
+            if (currentUserId !== authorId) {
+                newAnswer.find(".answer-actions").remove();    
+            }
+
+            answersList.append(newAnswer);
+            form.find("input[type='submit']").attr("disabled", false);
+            fadeInOutAnimation(newAnswer);
         });
     });
 </script>

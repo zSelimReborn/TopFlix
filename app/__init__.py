@@ -5,6 +5,7 @@ from flask_login import LoginManager, user_logged_in
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
 from flask_security import Security
+from flask_socketio import SocketIO
 
 import os
 import babel
@@ -19,6 +20,7 @@ login.login_view = 'auth.login'
 bootstrap = Bootstrap()
 mail = Mail()
 scheduler = BackgroundScheduler()
+socketio = SocketIO()
 
 
 def create_app(config_class=Config):
@@ -29,6 +31,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     login.init_app(app)
     bootstrap.init_app(app)
+    socketio.init_app(app, logger=True, engineio_logger=True)
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
@@ -67,3 +70,4 @@ def create_app(config_class=Config):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_debugger=True)
+    socketio.run(app, cors_allowed_origins="*")

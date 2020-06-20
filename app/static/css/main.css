@@ -733,6 +733,45 @@ header.header .navbar-nav .nav-item .btn.btn-main {
     z-index: 1000000;
 }
 
+.answer-wrapper .answer-upper-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.answer-wrapper .answer-upper-wrapper .discussion-actions {
+    display: flex;
+    align-items: center;
+}
+
+.answers-list-wrapper {
+    margin-top: 25px;
+}
+
+.answers-list-wrapper .answer-wrapper {
+    border-bottom: 1px solid #fbfbfb;
+    padding: 15px 15px 0;
+}
+
+.discussion-wrapper .discussion-list > .discussion-wrapper.view-full {
+    border: 0;
+}
+
+.answers-list-wrapper .answer-wrapper:first-of-type {
+    border-top: 1px solid #fbfbfb;
+}
+
+.answer-wrapper .answer-upper-wrapper .discussion-actions [class*='icon'] {
+    font-size: 20px;
+}
+
+.answer-wrapper .answer-upper-wrapper .discussion-actions .remove-wrapper [class*='icon'] {
+    color: #f71735;
+}
+
+.answer-wrapper .answer-upper-wrapper .discussion-actions .edit-wrapper [class*='icon'] {
+    color: #757575;
+}
+
 @media screen and (max-width: 991px) {
     .genre-liked-survey .genres-list-container .genres-list .movie-list-2 {
         max-width: 50%;

@@ -1,27 +1,5 @@
 <div class="answers-list-wrapper">
     {% for answer in discussion.answers %}
-        <div class="answer-wrapper">
-            <div class="answer-actions">
-                {% if answer.is_author(current_user) %}
-                    <div class="remove-wrapper">
-                        <a href="{{ url_for('main.remove_discussion', discussion_id=answer.id|string) }}" class="edit-btn btn-link btn">
-                            <span class="material-icons">cancel</span>
-                        </a>
-                    </div>
-                    <div class="edit-wrapper">
-                        <a href="{{ url_for('main.edit_answer', answer_id=answer.id|string) }}" class="edit-btn btn-link btn">
-                            <span class="material-icons">edit</span>
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-            <p class="content">{{ answer.description }}</p>
-            <p class="author">Risposta di {{ answer.get_author().fullname() }}</p>
-            <div class="answer-upvotes">
-                {% with d = answer %}
-                    {% include "discussion/upvotes.html" %}
-                {% endwith %}
-            </div>
-        </div>
+        {% include "discussion/answer/_view.html" %}
     {% endfor %}
 </div>

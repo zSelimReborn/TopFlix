@@ -1,4 +1,4 @@
 {% import 'bootstrap/wtf.html' as wtf %}
-<div class="new-answer-form">
+<div class="new-answer-form" data-discussion-id="{{ discussion.id|string }}">
     {{ wtf.quick_form(answer_form, action=answer_form.get_custom_action(discussion), method="POST") }}
 </div>

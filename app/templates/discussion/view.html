@@ -10,12 +10,14 @@
         </p>
     </div>
 
+    {% if current_user.is_authenticated %}
     <div class="answer-form">
         <button class="answer-btn btn btn-default">Rispondi</button>
         <div class="form-wrapper hidden">
             {% include "discussion/answer/form.html" %}
         </div>
     </div>
+    {% endif %}
 
     <div class="answers-list">
         {% include "discussion/answer/list.html" %}
