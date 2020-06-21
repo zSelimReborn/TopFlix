@@ -24,8 +24,8 @@
                     <div class="sort-by-select">
                         <select class="chosen-select-no-single sorty-by-select">
                             <option value="{{ url_for(request.endpoint, page=current_page, _external=True) }}">Ordine Predefinito</option>
-                            <option value="{{ url_for(request.endpoint, page=current_page, order_by='name', _external=True) }}" {{ "selected" if current_order_by == 'name' else "" }}>Nome</option>
-                            <option value="{{ url_for(request.endpoint, page=current_page, order_by='year', _external=True) }}" {{ "selected" if current_order_by == 'year' else "" }}>Anno</option>
+                            <option value="{{ url_for(request.endpoint, page=current_page, order_by='name', query=query, _external=True) }}" {{ "selected" if current_order_by == 'name' else "" }}>Nome</option>
+                            <option value="{{ url_for(request.endpoint, page=current_page, order_by='year', query=query,_external=True) }}" {{ "selected" if current_order_by == 'year' else "" }}>Anno</option>
                         </select>
                     </div>
                 </div>
@@ -81,12 +81,13 @@
             {% endfor %}
         <div class="row">
             <div class="col-md-12 col-sm-12">
+                {% if current_page > 0 %}
                 <nav class="pagination">
                     <ul>
                         {% for page in pages %}
                             {% set current_class = "current-page" if page == current_page else "" %}
                             {% set previous_class = "ti-angle-left" if page < current_page else "" %}
-                            {% set page_url = url_for(request.endpoint, page=page, order_by=current_order_by) %}
+                            {% set page_url = url_for(request.endpoint, page=page, order_by=current_order_by, query=query) %}
                             <li>
                                 <a href="{{ page_url }}" class="{{ current_class }} {{ previous_class }}">
                                     {% if previous_class == "" %}
@@ -96,9 +97,10 @@
                             </li>
                         {% endfor %}
 
-                        <li><a href="{{ url_for(request.endpoint, page=last_page, order_by=current_order_by) }}"><i class="ti-angle-right"></i></a></li>
+                        <li><a href="{{ url_for(request.endpoint, page=last_page, order_by=current_order_by, query=query) }}"><i class="ti-angle-right"></i></a></li>
                     </ul>
                 </nav>
+                {% endif %}
             </div>
         </div>
 

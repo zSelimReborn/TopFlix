@@ -65,6 +65,43 @@ def homepage():
         total_films=total_films, total_series=total_series, total_users=total_users,
         last_movies=last_movies, last_series=last_series, last_movies_imported=last_movies_imported)
 
+def pagination(collection, current_page, limit):
+    current_page = 1 if current_page <= 0 else current_page
+    total_count = collection.count()
+
+    print(current_page)
+    print(total_count)
+    print(current_page * limit)
+
+    if (total_count < (current_page * limit)):
+        # Ritorno ultima pagina
+        page = int(total_count / limit)
+        print(page)
+        to_skip = page * limit
+        print(to_skip)
+
+        collection = collection.skip(to_skip).limit(limit)
+
+
+        return collection, page, [page, page - 1], (page - 1)
+        
+    to_skip = (current_page - 1) * limit
+    collection = collection.skip(to_skip).limit(limit)
+
+    pages = []
+    if current_page > 1:
+        pages.append(current_page - 1)
+    
+    for i in range(0, 3):
+        page = current_page + i
+        skip = page * limit
+        if total_count >= skip:
+            pages.append(page)
+    
+    last_page = pages[len(pages) - 1]
+    return collection, current_page, pages, last_page
+
+
 @bp.route("/title")
 @check_survey_mandatory
 def list_title():
@@ -82,21 +119,12 @@ def list_title():
         titles = titles.order_by(order_by)
 
     page = request.args.get("page")
-
     page_int = int(page or 1)
-    page_int = 1 if page_int <= 0 else page_int
 
-    to_skip = (page_int - 1) * limit_title
-    titles = titles.skip(to_skip).limit(limit_title)
+    titles, page_int, pages, last_page = pagination(titles, page_int, limit_title)
 
-    pages = []
-    if page_int > 1:
-        pages.append(page_int - 1)
-
-    pages.extend([page_int, page_int + 1, page_int + 2])
-    last_page = pages[len(pages) - 1]
-
-    return render_template("title/list.html", titles=titles, header_classes="header-fixed header-transparent text-white", current_order_by=order_by, current_page=page_int, last_page=last_page, pages=pages)
+    return render_template("title/list.html", titles=titles, header_classes="header-fixed header-transparent text-white", 
+            current_order_by=order_by, current_page=page_int, last_page=last_page, pages=pages, query=query)
 
 @bp.route("/title/<id>")
 @check_survey_mandatory
