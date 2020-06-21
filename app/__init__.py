@@ -31,7 +31,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     login.init_app(app)
     bootstrap.init_app(app)
-    socketio.init_app(app, logger=True, engineio_logger=True)
+    socketio.init_app(app, logger=True, engineio_logger=True, cors_allowed_origins="*")
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
@@ -70,4 +70,4 @@ def create_app(config_class=Config):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_debugger=True)
-    socketio.run(app, cors_allowed_origins="*")
+    #socketio.run(app, cors_allowed_origins="*")
