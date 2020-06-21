@@ -16,7 +16,7 @@ from app.main.tasks import process_netflix_api
 from app.main.models import Review, Survey
 from app.main.forms import AddReviewForm, EditReviewForm, AddDiscussionForm, EditDiscussionForm, AnswerDiscussionForm, EditAnswerDiscussionForm
 from app.auth.forms import LoginForm, RegisterForm, RequestPasswordForm 
-from app import socketio as socket
+#from app import socketio as socket
 
 
 from .survey import SurveySwitchForm
@@ -35,8 +35,8 @@ def check_survey_mandatory(function):
     return wrapper
 
 ''' Import eventi socketio '''
-from .socketio import DiscussionNamespace
-socket.on_namespace(DiscussionNamespace())
+#from .socketio import DiscussionNamespace
+#socket.on_namespace(DiscussionNamespace())
 
 @bp.before_request
 def inject_user_forms():

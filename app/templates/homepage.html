@@ -53,13 +53,13 @@
     
     {% block scripts %}
     {{super()}}
-    <script type="text/javascript" charset="utf-8">
+    <!-- <script type="text/javascript" charset="utf-8">
         current_socket.on('discussion_created', function(data) {
             console.log("Received: ");
             console.log(data);
         });
 
         current_socket.emit('discussion_new', {'ciao': 'mondo'});
-    </script>
+    </script> -->
     {% endblock %}
 </div>
