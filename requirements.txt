@@ -19,7 +19,7 @@ cffi
 chardet==3.0.4
 colorama==0.3.2
 dominate==2.4.0
-html5lib==0.999
+html5lib==0.99999999
 itsdangerous==1.1.0
 ndg-httpsclient==0.3.2
 ply==3.4
